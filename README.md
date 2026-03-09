@@ -3,7 +3,7 @@
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
-Stationary Subspace Analysis (SSA) for temporal, spatial, and spatio-temporal data.
+Stationary Subspace Analysis (SSA) for temporal and spatial data.
 
 `pyssaBSS` implements methods for separating stationary and nonstationary subspaces
 in multivariate data, based on the joint eigen-decomposition of scatter operators.  It provides `SSA` for
@@ -20,7 +20,7 @@ The original package can be found at: https://cran.r-project.org/package=JADE
 pip install pyssaBSS
 ```
 
-Pre-built wheels are available for Windows, macOS, and Linux (Python 3.9–3.13).
+Pre-built wheels are available for Windows, macOS, and Linux (Python 3.8–3.13).
 No compiler required.
 
 ### Building from source
