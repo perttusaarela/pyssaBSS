@@ -1,6 +1,5 @@
 # pyssaBSS
-
-
+[![CI](https://github.com/perttusaarela/pyssaBSS/actions/workflows/build.yml/badge.svg)](https://github.com/yourname/pyssaBSS/actions)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
 Stationary Subspace Analysis (SSA) for temporal and spatial data.
