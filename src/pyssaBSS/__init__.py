@@ -1,3 +1,5 @@
+from importlib.metadata import version, PackageNotFoundError
+
 from .jdc import joint_diagonalization
 from . import kernels
 from .polygon import PolygonDrawer
@@ -7,6 +9,12 @@ from .spssa import SPSSA_COMB, SPSSA_SIR, SPSSA_LCOR, SPSSA_SAVE, SPSSA
 from . import spatial
 from . import utils
 from . import types
+
+try:
+    __version__ = version("pyssaBSS")
+except PackageNotFoundError:
+    # Package not installed (e.g. running directly from source)
+    __version__ = "unknown"
 
 __all__ = [
     "joint_diagonalization",
