@@ -43,6 +43,8 @@ skip = "*-win32 *-manylinux_i686 *-musllinux*"
 before-build = "pip install cmake pybind11"
 
 [tool.cibuildwheel.linux]
+manylinux-x86_64-image = "manylinux_2_28"  # newer than manylinux2014
+before-all = "dnf install -y openblas-devel" 
 before-build = "pip install cmake pybind11"
 
 [tool.cibuildwheel.windows]
