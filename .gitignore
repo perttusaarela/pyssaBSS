@@ -2,8 +2,6 @@
 dist/
 
 docs/_build/
-docs/_static/
-docs/_templates/
 docs/generated/
 
 src/pyssaBSS/__pycache__/
