@@ -1,2 +1,10 @@
 .venv/
 dist/
+
+docs/_build/
+docs/_static/
+docs/_templates/
+docs/generated/
+
+src/pyssaBSS/__pycache__/
+src/pyssaBSS/joint_diag/__pycache__/

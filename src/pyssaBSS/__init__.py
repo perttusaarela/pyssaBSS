@@ -6,6 +6,7 @@ from .ssa import SSA, AugmentationRankEstimator, SSA_SIR, SSA_COMB, SSA_SAVE, SS
 from .spssa import SPSSA_COMB, SPSSA_SIR, SPSSA_LCOR, SPSSA_SAVE, SPSSA
 from . import spatial
 from . import utils
+from . import types
 
 __all__ = [
     "joint_diagonalization",
@@ -15,6 +16,7 @@ __all__ = [
     "scatter",
     "spatial",
     "utils",
+    "types",
     "SSA",
     "SSA_SAVE",
     "SSA_COR",

@@ -9,18 +9,25 @@ class SPSSA(SSA):
     """
     Spatial Stationary Subspace Analysis (SPSSA)
 
-    Usage
-    -----
-    1. Initialize:
-        model = SPSSA(data, coords, scatter=scatter, partition=segs)
-    2. Optionally estimate the rank of the nonstationary subspace:
+    
+    Examples
+    --------
+    Initialize the model::
+
+        model = SPSSA(data, coords, scatter=scatter, partition=partition)
+
+    Optionally estimate the rank of the nonstationary subspace::
+
         q = model.estimate_rank()
-    3. Extract stationary and nonstationary subspaces:
+
+    Extract stationary and nonstationary subspaces::
+
         ss, ns = model.subspaces(q)
+
 
     Parameters
     ----------
-    data : ndarray of shape (n_features, n_samples)
+    data : ndarray of shape (n_signals, n_samples)
         Observed data matrix. Decomposition is performed immediately on construction.
     coords : ndarray, optional
         Spatial coordinates passed to the segmentation function.
@@ -33,6 +40,7 @@ class SPSSA(SSA):
         An object to compute an estimate of the nonstationary dimension.
         Currently only support one kind of estimator but could be easily
         extended to include different estimators.
+
 
     Attributes
     ----------

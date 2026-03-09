@@ -9,14 +9,21 @@ class SSA:
     """
     Stationary Subspace Analysis (SSA)
 
-    Usage
-    -----
-    1. Initialize:
-        model = SSA(data, partition=part, scatter=scatter)
-    2. Optionally estimate the rank of the nonstationary subspace:
+    
+    Examples
+    --------
+    Initialize the model::
+
+        model = SSA(data, coords, scatter=scatter, partition=partition)
+
+    Optionally estimate the rank of the nonstationary subspace::
+
         q = model.estimate_rank()
-    3. Extract stationary and nonstationary subspaces:
+
+    Extract stationary and nonstationary subspaces::
+
         ss, ns = model.subspaces(q)
+
 
     Parameters
     ----------
@@ -30,6 +37,7 @@ class SSA:
         An object to compute an estimate of the nonstationary dimension.
         Currently only support one kind of estimator but could be easily
         extended to include different estimators.
+
 
     Attributes
     ----------
@@ -74,7 +82,7 @@ class SSA:
         ----------
         individual : bool, default False
             If True, also estimate rank for each individual scatter and store
-            full results in rank_summary_. Slower but more informative.
+            full results in ``rank_summary_``. Slower but more informative.
 
         Returns
         -------

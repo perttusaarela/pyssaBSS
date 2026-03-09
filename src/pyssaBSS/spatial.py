@@ -179,6 +179,7 @@ def partition_coordinates(coordinates, num_x_segments: int, num_y_segments: int,
     Parameters
     ----------
     coordinates : ndarray of shape (n, 2)
+        spatial coordinates in [0, side_length) x [0, side_lenght)
     num_x_segments : int
         number of cuts on along the x-axis
     num_y_segments : int
