@@ -6,6 +6,32 @@ from .spatial import points_in_polygon
 
 
 class PolygonDrawer:
+    """
+    Polygon drawer
+
+    This can be used to construct polygonal partitions of data points
+    on a given map. The partition can then be saved a JSON file and
+    used for the SPSSA methods.
+
+    Usage
+    -----
+    1. Initialize:
+        drawer = PolygonDrawer(ax, points)
+    2. Draw polygons:
+        plt.show()
+    3. Save polygons:
+        drawer.save("polygons.json")
+
+    Parameters
+    ----------
+    ax : an ax object from pyplot
+        this is the map on which we draw. The drawer assumes that this is 
+        already constructed (e.g. from png and a bounding box)
+    points : ndarray of shape (n, 2)
+        the coordinates of the points we want to partition.
+        The points should lie inside the bounding box of the ax figure.
+    """
+
     SNAP_RADIUS_PX = 10  # pixels to snap-close polygon
     MOVE_THRESHOLD = 2   # pixels of mouse movement before recomputing
 

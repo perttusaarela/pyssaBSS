@@ -7,45 +7,45 @@ from .scatter import *
 
 class SSA:
     """
-        Stationary Subspace Analysis (SSA)
+    Stationary Subspace Analysis (SSA)
 
-        Usage
-        -----
-        1. Initialize:
-            model = SSA(data, partition=part, scatter=scatter)
-        2. Optionally estimate the rank of the nonstationary subspace:
-            q = model.estimate_rank()
-        3. Extract stationary and nonstationary subspaces:
-            ss, ns = model.subspaces(q)
+    Usage
+    -----
+    1. Initialize:
+        model = SSA(data, partition=part, scatter=scatter)
+    2. Optionally estimate the rank of the nonstationary subspace:
+        q = model.estimate_rank()
+    3. Extract stationary and nonstationary subspaces:
+        ss, ns = model.subspaces(q)
 
-        Parameters
-        ----------
-        data : ndarray of shape (n_signals, n_samples)
-            Observed data matrix. Decomposition is performed immediately on construction.
-        partition : ndarray, optional
-            Partition labels for observations.
-        scatter : dict, list, or scatter object
-            Scatter matrices or operators for subspace analysis.
-        dim_estimator : AugmentationRankEstimator, optional
-            An object to compute an estimate of the nonstationary dimension.
-            Currently only support one kind of estimator but could be easily
-            extended to include different estimators.
+    Parameters
+    ----------
+    data : ndarray of shape (n_signals, n_samples)
+        Observed data matrix. Decomposition is performed immediately on construction.
+    partition : ndarray, optional
+        Partition labels for observations.
+    scatter : dict, list, or scatter object
+        Scatter matrices or operators for subspace analysis.
+    dim_estimator : AugmentationRankEstimator, optional
+        An object to compute an estimate of the nonstationary dimension.
+        Currently only support one kind of estimator but could be easily
+        extended to include different estimators.
 
-        Attributes
-        ----------
-        whitener_ : ndarray
-            Whitening matrix from data standardization.
-        diagonalizer_ : ndarray
-            Matrix that diagonalizes the scatter matrices.
-        eigenvalues_ : ndarray
-            Eigenvalues from the diagonalization.
-        individual_models_ : dict[str, SSA]
-            Decomposed models for individual scatters.
-        estimated_rank_ : int or None
-            Rank estimated by estimate_rank(), if called.
-        rank_summary_ : SSARankSummary or RankResult
-            Full rank estimation diagnostics, if estimate_rank() has been called.
-        """
+    Attributes
+    ----------
+    whitener_ : ndarray
+        Whitening matrix from data standardization.
+    diagonalizer_ : ndarray
+        Matrix that diagonalizes the scatter matrices.
+    eigenvalues_ : ndarray
+        Eigenvalues from the diagonalization.
+    individual_models_ : dict[str, SSA]
+        Decomposed models for individual scatters.
+    estimated_rank_ : int or None
+        Rank estimated by estimate_rank(), if called.
+    rank_summary_ : SSARankSummary or RankResult
+        Full rank estimation diagnostics, if estimate_rank() has been called.
+    """
 
     def __init__(
             self,

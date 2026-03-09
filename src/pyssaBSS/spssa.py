@@ -46,8 +46,6 @@ class SPSSA(SSA):
         Decomposed models for individual scatters.
     estimated_rank_ : int or None
         Rank estimated by estimate_rank(), if called.
-    rank_summary_ : SSARankSummary or RankResult
-        Full rank estimation diagnostics, if estimate_rank() has been called.
     """
 
     def __init__(

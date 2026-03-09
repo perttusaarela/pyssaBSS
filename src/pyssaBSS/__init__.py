@@ -13,6 +13,8 @@ __all__ = [
     "PolygonDrawer",
     "AugmentationRankEstimator",
     "scatter",
+    "spatial",
+    "utils",
     "SSA",
     "SSA_SAVE",
     "SSA_COR",
