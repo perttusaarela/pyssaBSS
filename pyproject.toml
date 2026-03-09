@@ -1,0 +1,35 @@
+[build-system]
+requires = ["scikit-build-core>=0.8", "pybind11"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "pyssaBSS"
+version = "0.1.0"
+description = "Stationary Subspace Analysis for temporal and spatial data"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{name = "Perttu Saarela"}]
+keywords = ["statistics", "stationary subspace analysis", "spatial statistics",
+    "time series", "order determination", "joint diagonalization"]
+requires-python = ">=3.8"
+
+dependencies = [
+    "matplotlib>=3.6",
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "scikit-learn>=1.4",
+    "scipy>=1.11",
+    "seaborn>=0.13",
+    "sympy>=1.12",
+]
+
+[project.urls]
+Homepage = "https://github.com/perttusaarela/pyssaBSS" 
+
+[tool.scikit-build]
+build-dir = "build/{wheel_tag}"
+wheel.packages = ["src/pyssaBSS"]
+sdist.exclude = [".venv", "build"] 
+
+[tool.scikit-build.cmake]
+minimum-version = "3.15"
