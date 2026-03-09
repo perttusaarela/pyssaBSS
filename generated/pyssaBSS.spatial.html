@@ -1,0 +1,398 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyssaBSS.spatial &mdash; pyssaBSS 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pyssaBSS.spssa" href="pyssaBSS.spssa.html" />
+    <link rel="prev" title="pyssaBSS.scatter" href="pyssaBSS.scatter.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            pyssaBSS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pyssaBSS.html">pyssaBSS</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.AugmentationRankEstimator"><code class="docutils literal notranslate"><span class="pre">AugmentationRankEstimator</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.PolygonDrawer"><code class="docutils literal notranslate"><span class="pre">PolygonDrawer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SPSSA"><code class="docutils literal notranslate"><span class="pre">SPSSA</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SPSSA_COMB"><code class="docutils literal notranslate"><span class="pre">SPSSA_COMB()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SPSSA_LCOR"><code class="docutils literal notranslate"><span class="pre">SPSSA_LCOR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SPSSA_SAVE"><code class="docutils literal notranslate"><span class="pre">SPSSA_SAVE()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SPSSA_SIR"><code class="docutils literal notranslate"><span class="pre">SPSSA_SIR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SSA"><code class="docutils literal notranslate"><span class="pre">SSA</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SSA_COMB"><code class="docutils literal notranslate"><span class="pre">SSA_COMB()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SSA_COR"><code class="docutils literal notranslate"><span class="pre">SSA_COR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SSA_SAVE"><code class="docutils literal notranslate"><span class="pre">SSA_SAVE()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SSA_SIR"><code class="docutils literal notranslate"><span class="pre">SSA_SIR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.joint_diagonalization"><code class="docutils literal notranslate"><span class="pre">joint_diagonalization()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.jdc.html">pyssaBSS.jdc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.joint_diag.html">pyssaBSS.joint_diag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.kernels.html">pyssaBSS.kernels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.polygon.html">pyssaBSS.polygon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.scatter.html">pyssaBSS.scatter</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">pyssaBSS.spatial</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.spatial.generate_coordinates"><code class="docutils literal notranslate"><span class="pre">generate_coordinates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.spatial.generate_spatial_data"><code class="docutils literal notranslate"><span class="pre">generate_spatial_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.spatial.is_in_rectangle_mask"><code class="docutils literal notranslate"><span class="pre">is_in_rectangle_mask()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.spatial.matern_covariance"><code class="docutils literal notranslate"><span class="pre">matern_covariance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.spatial.params_to_block_vector"><code class="docutils literal notranslate"><span class="pre">params_to_block_vector()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.spatial.partition_coordinates"><code class="docutils literal notranslate"><span class="pre">partition_coordinates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.spatial.partition_points_by_polygons"><code class="docutils literal notranslate"><span class="pre">partition_points_by_polygons()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.spatial.points_in_polygon"><code class="docutils literal notranslate"><span class="pre">points_in_polygon()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.spatial.spatial_data_from_cholesky"><code class="docutils literal notranslate"><span class="pre">spatial_data_from_cholesky()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.spatial.ssa_matern_covariance"><code class="docutils literal notranslate"><span class="pre">ssa_matern_covariance()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.spssa.html">pyssaBSS.spssa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.ssa.html">pyssaBSS.ssa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.types.html">pyssaBSS.types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.utils.html">pyssaBSS.utils</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyssaBSS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="pyssaBSS.html">pyssaBSS</a></li>
+      <li class="breadcrumb-item active">pyssaBSS.spatial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/generated/pyssaBSS.spatial.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-pyssaBSS.spatial">
+<span id="pyssabss-spatial"></span><h1>pyssaBSS.spatial<a class="headerlink" href="#module-pyssaBSS.spatial" title="Link to this heading"></a></h1>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyssaBSS.spatial.generate_coordinates" title="pyssaBSS.spatial.generate_coordinates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_coordinates</span></code></a>(num_data_points[, hi])</p></td>
+<td><p>Generates uniformly random 2-D coordinates from [0, hi) x [0, hi)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyssaBSS.spatial.generate_spatial_data" title="pyssaBSS.spatial.generate_spatial_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_spatial_data</span></code></a>(covariance_matrix[, mean])</p></td>
+<td><p>Generate spatial data from covariance matrix using the Cholesky decomposition.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyssaBSS.spatial.is_in_rectangle_mask" title="pyssaBSS.spatial.is_in_rectangle_mask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_in_rectangle_mask</span></code></a>(points, corner, height, ...)</p></td>
+<td><p>Vectorized check of which points are contains in the box outlined by corner, height, and width</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyssaBSS.spatial.matern_covariance" title="pyssaBSS.spatial.matern_covariance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matern_covariance</span></code></a>(points[, nu, phi])</p></td>
+<td><p>Computes the covariance matrix of a set of points using sklearn Matern kernel.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyssaBSS.spatial.params_to_block_vector" title="pyssaBSS.spatial.params_to_block_vector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">params_to_block_vector</span></code></a>(params, segments)</p></td>
+<td><p>Computes a vector where the indices of segments[i] has the value params[i]</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyssaBSS.spatial.partition_coordinates" title="pyssaBSS.spatial.partition_coordinates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">partition_coordinates</span></code></a>(coordinates, ...[, ...])</p></td>
+<td><p>Grid partition of coordinates.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyssaBSS.spatial.partition_points_by_polygons" title="pyssaBSS.spatial.partition_points_by_polygons"><code class="xref py py-obj docutils literal notranslate"><span class="pre">partition_points_by_polygons</span></code></a>(points, polygons)</p></td>
+<td><p>Partition of coordinates based on the first polygon which contains them.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyssaBSS.spatial.points_in_polygon" title="pyssaBSS.spatial.points_in_polygon"><code class="xref py py-obj docutils literal notranslate"><span class="pre">points_in_polygon</span></code></a>(points, polygon)</p></td>
+<td><p>Vectorized check of which points are contained in the given polygon</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyssaBSS.spatial.spatial_data_from_cholesky" title="pyssaBSS.spatial.spatial_data_from_cholesky"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spatial_data_from_cholesky</span></code></a>(cholesky)</p></td>
+<td><p>Spatial data via the Cholesky method.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyssaBSS.spatial.ssa_matern_covariance" title="pyssaBSS.spatial.ssa_matern_covariance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ssa_matern_covariance</span></code></a>(points[, nu, phi, sigma])</p></td>
+<td><p>Computes the usual Matern covariance matrix of a set of points using sklearn Matern kernel.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.spatial.generate_coordinates">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.spatial.</span></span><span class="sig-name descname"><span class="pre">generate_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_data_points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/spatial.html#generate_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.spatial.generate_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Generates uniformly random 2-D coordinates from [0, hi) x [0, hi)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_data_points</strong> (<em>int</em>) – Number of data points to generate</p></li>
+<li><p><strong>hi</strong> (<em>float</em>) – Upper bound for the sampling area.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>coordinate</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray of shape (num_data_points, 2)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.spatial.generate_spatial_data">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.spatial.</span></span><span class="sig-name descname"><span class="pre">generate_spatial_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">covariance_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/spatial.html#generate_spatial_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.spatial.generate_spatial_data" title="Link to this definition"></a></dt>
+<dd><p>Generate spatial data from covariance matrix using the Cholesky decomposition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>covariance_matrix</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>n</em><em>, </em><em>n</em><em>)</em>) – a positive-semidefinite covariance matrix (must be cholesky decomposable)</p></li>
+<li><p><strong>mean</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>n</em><em>, </em><em>1</em><em>)</em><em>, </em><em>optional</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>spatial_data</strong> – spatial data with mean ‘mean’ and covariance ‘covariance_matrix’</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray of shape (n, 1)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.spatial.is_in_rectangle_mask">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.spatial.</span></span><span class="sig-name descname"><span class="pre">is_in_rectangle_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/spatial.html#is_in_rectangle_mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.spatial.is_in_rectangle_mask" title="Link to this definition"></a></dt>
+<dd><p>Vectorized check of which points are contains in the box outlined by
+corner, height, and width</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>points</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>n</em><em>, </em><em>2</em><em>)</em>)</p></li>
+<li><p><strong>corner</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – indicates the bottom left corner of a rectangle</p></li>
+<li><p><strong>height</strong> (<em>float</em>) – indicates the height of the rectangle</p></li>
+<li><p><strong>width</strong> (<em>float</em>) – indicates the width of the rectangle</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>mask</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray of booleans of shape (num_data_points, 2)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.spatial.matern_covariance">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.spatial.</span></span><span class="sig-name descname"><span class="pre">matern_covariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/spatial.html#matern_covariance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.spatial.matern_covariance" title="Link to this definition"></a></dt>
+<dd><p>Computes the covariance matrix of a set of points using sklearn Matern kernel.
+This differs from the usual Matern Kernel by a constant.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>points</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>n</em><em>, </em><em>2</em><em>)</em>)</p></li>
+<li><p><strong>nu</strong> (<em>float</em>) – smoothness parameter</p></li>
+<li><p><strong>phi</strong> (<em>float</em>) – range parameter</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>mat</strong> – spatial covariance matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray of shape (n, n)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.spatial.params_to_block_vector">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.spatial.</span></span><span class="sig-name descname"><span class="pre">params_to_block_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segments</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/spatial.html#params_to_block_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.spatial.params_to_block_vector" title="Link to this definition"></a></dt>
+<dd><p>Computes a vector where the indices of segments[i] has the value params[i]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<em>list</em><em> of </em><em>values</em>)</p></li>
+<li><p><strong>segments</strong> (<em>list</em><em> of </em><em>list</em><em> of </em><em>indices</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>result</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray of shape (n, 1)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.spatial.partition_coordinates">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.spatial.</span></span><span class="sig-name descname"><span class="pre">partition_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coordinates</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_x_segments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_y_segments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">side_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/spatial.html#partition_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.spatial.partition_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Grid partition of coordinates. Coordinates lying in a box [0, side_length) x [0, side_lenght)
+are partitioned by a grid given by the number of of cuts in x and y direnctions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coordinates</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>n</em><em>, </em><em>2</em><em>)</em>) – spatial coordinates in [0, side_length) x [0, side_lenght)</p></li>
+<li><p><strong>num_x_segments</strong> (<em>int</em>) – number of cuts on along the x-axis</p></li>
+<li><p><strong>num_y_segments</strong> (<em>int</em>) – number of cuts on along the y-axis</p></li>
+<li><p><strong>side_length</strong> (<em>float</em>) – Length of the sides of the bounding square</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>partition</strong> – A list of lists of indices. Each list is a part. Each part is a list of indices of coordinates
+lying inside that rectangle.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list(list(int))</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.spatial.partition_points_by_polygons">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.spatial.</span></span><span class="sig-name descname"><span class="pre">partition_points_by_polygons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polygons</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/spatial.html#partition_points_by_polygons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.spatial.partition_points_by_polygons" title="Link to this definition"></a></dt>
+<dd><p>Partition of coordinates based on the first polygon which contains them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coordinates</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>n</em><em>, </em><em>2</em><em>)</em>)</p></li>
+<li><p><strong>polygons</strong> (<em>list</em><em> of </em><em>ndarrays</em><em> of </em><em>shape</em><em> (</em><em>num_vertices</em><em>, </em><em>2</em><em>)</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>partition</strong> (<em>list(list(int))</em>) – A list of lists of indices. Each list is a part. Each part is a list of indices of coordinates
+lying inside that rectangle.</p></li>
+<li><p><strong>unassigned</strong> (<em>list(int)</em>) – list of coordinates that were in no polygon</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.spatial.points_in_polygon">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.spatial.</span></span><span class="sig-name descname"><span class="pre">points_in_polygon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polygon</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/spatial.html#points_in_polygon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.spatial.points_in_polygon" title="Link to this definition"></a></dt>
+<dd><p>Vectorized check of which points are contained in the given polygon</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>points</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>n</em><em>, </em><em>2</em><em>)</em>)</p></li>
+<li><p><strong>polygon</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>p</em><em>, </em><em>2</em><em>)</em>) – a polygon is represented by the coordinates of its vertices in a fixed order</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>mask</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray of booleans of shape (num_data_points, 2)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.spatial.spatial_data_from_cholesky">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.spatial.</span></span><span class="sig-name descname"><span class="pre">spatial_data_from_cholesky</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cholesky</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/spatial.html#spatial_data_from_cholesky"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.spatial.spatial_data_from_cholesky" title="Link to this definition"></a></dt>
+<dd><p>Spatial data via the Cholesky method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cholesky</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>n</em><em>, </em><em>n</em><em>)</em>)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>spatial_data</strong> – zero-mean spatial data with covariance L^T L</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray of shape (n, 1)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.spatial.ssa_matern_covariance">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.spatial.</span></span><span class="sig-name descname"><span class="pre">ssa_matern_covariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/spatial.html#ssa_matern_covariance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.spatial.ssa_matern_covariance" title="Link to this definition"></a></dt>
+<dd><p>Computes the usual Matern covariance matrix of a set of points using sklearn Matern kernel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>points</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>n</em><em>, </em><em>2</em><em>)</em>)</p></li>
+<li><p><strong>nu</strong> (<em>float</em>) – smoothness parameter</p></li>
+<li><p><strong>phi</strong> (<em>float</em>) – range parameter</p></li>
+<li><p><strong>sigma</strong> (<em>float</em>) – variance parameter</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>mat</strong> – spatial covariance matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray of shape (n, n)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pyssaBSS.scatter.html" class="btn btn-neutral float-left" title="pyssaBSS.scatter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pyssaBSS.spssa.html" class="btn btn-neutral float-right" title="pyssaBSS.spssa" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Perttu Saarela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

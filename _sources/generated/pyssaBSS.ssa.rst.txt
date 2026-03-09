@@ -1,0 +1,23 @@
+pyssaBSS.ssa
+============
+
+.. automodule:: pyssaBSS.ssa
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      SSA_COMB
+      SSA_COR
+      SSA_SAVE
+      SSA_SIR
+      normalized_scree
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      AugmentationRankEstimator
+      SSA
+   

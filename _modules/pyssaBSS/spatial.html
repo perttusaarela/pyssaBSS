@@ -1,0 +1,423 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyssaBSS.spatial &mdash; pyssaBSS 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            pyssaBSS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pyssaBSS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pyssaBSS.spatial</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pyssaBSS.spatial</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.gaussian_process.kernels</span><span class="w"> </span><span class="kn">import</span> <span class="n">Matern</span>
+
+
+<span class="c1"># ----------------------------------------------------------------------</span>
+<span class="c1"># Functions for generating spatial data</span>
+<span class="c1"># ----------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="generate_coordinates">
+<a class="viewcode-back" href="../../generated/pyssaBSS.spatial.html#pyssaBSS.spatial.generate_coordinates">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_coordinates</span><span class="p">(</span><span class="n">num_data_points</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">hi</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates uniformly random 2-D coordinates from [0, hi) x [0, hi)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    num_data_points : int</span>
+<span class="sd">        Number of data points to generate</span>
+<span class="sd">    hi : float</span>
+<span class="sd">        Upper bound for the sampling area.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    coordinate: ndarray of shape (num_data_points, 2)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">hi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">num_data_points</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="spatial_data_from_cholesky">
+<a class="viewcode-back" href="../../generated/pyssaBSS.spatial.html#pyssaBSS.spatial.spatial_data_from_cholesky">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">spatial_data_from_cholesky</span><span class="p">(</span><span class="n">cholesky</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Spatial data via the Cholesky method.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cholesky : ndarray of shape (n, n)</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    spatial_data: ndarray of shape (n, 1)</span>
+<span class="sd">        zero-mean spatial data with covariance L^T L</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="n">cholesky</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">gaussian_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>   <span class="c1"># zero mean vector, Cov = I_n</span>
+    <span class="n">spatial_data</span> <span class="o">=</span> <span class="n">cholesky</span> <span class="o">@</span> <span class="n">gaussian_data</span>
+
+    <span class="k">return</span> <span class="n">spatial_data</span></div>
+
+
+
+<div class="viewcode-block" id="generate_spatial_data">
+<a class="viewcode-back" href="../../generated/pyssaBSS.spatial.html#pyssaBSS.spatial.generate_spatial_data">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_spatial_data</span><span class="p">(</span><span class="n">covariance_matrix</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate spatial data from covariance matrix using the Cholesky decomposition.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    covariance_matrix : ndarray of shape (n, n)</span>
+<span class="sd">        a positive-semidefinite covariance matrix (must be cholesky decomposable)</span>
+<span class="sd">    mean : ndarray of shape (n, 1), optional</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    spatial_data: ndarray of shape (n, 1)</span>
+<span class="sd">        spatial data with mean &#39;mean&#39; and covariance &#39;covariance_matrix&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">mean</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">covariance_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># if mean is not specified, it is assumed to be zero</span>
+
+    <span class="n">cholesky</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">covariance_matrix</span><span class="p">)</span>  <span class="c1"># compute the cholseky decomp. of Cov</span>
+    <span class="n">spatial_data</span> <span class="o">=</span> <span class="n">spatial_data_from_cholesky</span><span class="p">(</span><span class="n">cholesky</span><span class="p">)</span> <span class="o">+</span> <span class="n">mean</span>
+
+    <span class="k">return</span> <span class="n">spatial_data</span></div>
+
+
+
+<div class="viewcode-block" id="matern_covariance">
+<a class="viewcode-back" href="../../generated/pyssaBSS.spatial.html#pyssaBSS.spatial.matern_covariance">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">matern_covariance</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the covariance matrix of a set of points using sklearn Matern kernel. </span>
+<span class="sd">    This differs from the usual Matern Kernel by a constant.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    points : ndarray of shape (n, 2)</span>
+<span class="sd">    nu : float</span>
+<span class="sd">        smoothness parameter</span>
+<span class="sd">    phi : float</span>
+<span class="sd">        range parameter</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    mat: ndarray of shape (n, n)</span>
+<span class="sd">        spatial covariance matrix</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">matern</span> <span class="o">=</span> <span class="n">Matern</span><span class="p">(</span><span class="n">length_scale</span><span class="o">=</span><span class="n">phi</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="n">nu</span><span class="p">)</span>
+    <span class="n">mat</span> <span class="o">=</span> <span class="n">matern</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">mat</span></div>
+
+
+
+<div class="viewcode-block" id="ssa_matern_covariance">
+<a class="viewcode-back" href="../../generated/pyssaBSS.spatial.html#pyssaBSS.spatial.ssa_matern_covariance">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">ssa_matern_covariance</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the usual Matern covariance matrix of a set of points using sklearn Matern kernel.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    points : ndarray of shape (n, 2)</span>
+<span class="sd">    nu : float</span>
+<span class="sd">        smoothness parameter</span>
+<span class="sd">    phi : float</span>
+<span class="sd">        range parameter</span>
+<span class="sd">    sigma : float</span>
+<span class="sd">        variance parameter</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    mat: ndarray of shape (n, n)</span>
+<span class="sd">        spatial covariance matrix</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">matern_covariance</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="n">nu</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="n">phi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">nu</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="params_to_block_vector">
+<a class="viewcode-back" href="../../generated/pyssaBSS.spatial.html#pyssaBSS.spatial.params_to_block_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">params_to_block_vector</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">segments</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes a vector where the indices of segments[i] has the value params[i]</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    params : list of values</span>
+<span class="sd">    segments : list of list of indices </span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    result: ndarray of shape (n, 1)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Find maximum index to size the array</span>
+    <span class="n">max_index</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span> <span class="k">for</span> <span class="n">seg</span> <span class="ow">in</span> <span class="n">segments</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">max_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="c1"># Assign each segment&#39;s parameter to its indices</span>
+    <span class="k">for</span> <span class="n">param</span><span class="p">,</span> <span class="n">seg</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">segments</span><span class="p">):</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">seg</span><span class="p">)]</span> <span class="o">=</span> <span class="n">param</span>
+
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<span class="c1"># ----------------------------------------------------------------------</span>
+<span class="c1"># Functions for partitioning spatial data</span>
+<span class="c1"># ----------------------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="is_in_rectangle_mask">
+<a class="viewcode-back" href="../../generated/pyssaBSS.spatial.html#pyssaBSS.spatial.is_in_rectangle_mask">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_in_rectangle_mask</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">corner</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vectorized check of which points are contains in the box outlined by </span>
+<span class="sd">    corner, height, and width</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    points : ndarray of shape (n, 2)</span>
+<span class="sd">    corner : tuple(float, float)</span>
+<span class="sd">        indicates the bottom left corner of a rectangle</span>
+<span class="sd">    height : float</span>
+<span class="sd">        indicates the height of the rectangle</span>
+<span class="sd">    width : float</span>
+<span class="sd">        indicates the width of the rectangle</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    mask: ndarray of booleans of shape (num_data_points, 2)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">corner</span>
+    <span class="n">mask_x</span> <span class="o">=</span> <span class="p">(</span><span class="n">points</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">x</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">points</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">width</span><span class="p">)</span>
+    <span class="n">mask_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">points</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">y</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">points</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">y</span> <span class="o">+</span> <span class="n">height</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">mask_x</span> <span class="o">&amp;</span> <span class="n">mask_y</span></div>
+
+
+<div class="viewcode-block" id="partition_coordinates">
+<a class="viewcode-back" href="../../generated/pyssaBSS.spatial.html#pyssaBSS.spatial.partition_coordinates">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">partition_coordinates</span><span class="p">(</span><span class="n">coordinates</span><span class="p">,</span> <span class="n">num_x_segments</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_y_segments</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">side_length</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Grid partition of coordinates. Coordinates lying in a box [0, side_length) x [0, side_lenght)</span>
+<span class="sd">    are partitioned by a grid given by the number of of cuts in x and y direnctions</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    coordinates : ndarray of shape (n, 2)</span>
+<span class="sd">        spatial coordinates in [0, side_length) x [0, side_lenght)</span>
+<span class="sd">    num_x_segments : int</span>
+<span class="sd">        number of cuts on along the x-axis</span>
+<span class="sd">    num_y_segments : int</span>
+<span class="sd">        number of cuts on along the y-axis</span>
+<span class="sd">    side_length : float</span>
+<span class="sd">        Length of the sides of the bounding square</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    partition: list(list(int))</span>
+<span class="sd">        A list of lists of indices. Each list is a part. Each part is a list of indices of coordinates</span>
+<span class="sd">        lying inside that rectangle. </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">coordinates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">coordinates</span><span class="p">)</span>
+    <span class="n">unif_height</span> <span class="o">=</span> <span class="n">side_length</span> <span class="o">/</span> <span class="n">num_y_segments</span>  <span class="c1"># so far only uniform partitioning is possible but this could be extended</span>
+    <span class="n">unif_width</span> <span class="o">=</span> <span class="n">side_length</span> <span class="o">/</span> <span class="n">num_x_segments</span>
+
+    <span class="n">partition</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">iy</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_y_segments</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">ix</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_x_segments</span><span class="p">):</span>
+            <span class="n">x0</span> <span class="o">=</span> <span class="n">ix</span> <span class="o">*</span> <span class="n">unif_width</span>
+            <span class="n">y0</span> <span class="o">=</span> <span class="n">iy</span> <span class="o">*</span> <span class="n">unif_height</span>
+            <span class="n">corner</span> <span class="o">=</span> <span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">)</span>
+
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">is_in_rectangle_mask</span><span class="p">(</span><span class="n">coordinates</span><span class="p">,</span> <span class="n">corner</span><span class="p">,</span> <span class="n">unif_height</span><span class="p">,</span> <span class="n">unif_width</span><span class="p">)</span>
+            <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="n">partition</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">indices</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="n">partition</span></div>
+
+
+
+<div class="viewcode-block" id="points_in_polygon">
+<a class="viewcode-back" href="../../generated/pyssaBSS.spatial.html#pyssaBSS.spatial.points_in_polygon">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">points_in_polygon</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">polygon</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vectorized check of which points are contained in the given polygon</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    points : ndarray of shape (n, 2)</span>
+<span class="sd">    polygon : ndarray of shape (p, 2)</span>
+<span class="sd">        a polygon is represented by the coordinates of its vertices in a fixed order</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    mask: ndarray of booleans of shape (num_data_points, 2)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+    <span class="n">polygon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">polygon</span><span class="p">)</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">points</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">points</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">polygon</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">y1</span> <span class="o">=</span> <span class="n">polygon</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">y2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">y1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span>
+    <span class="n">non_horizontal</span> <span class="o">=</span> <span class="n">dy</span> <span class="o">!=</span> <span class="mi">0</span>
+
+    <span class="c1"># Only consider non-horizontal edges</span>
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">x1</span><span class="p">[</span><span class="n">non_horizontal</span><span class="p">]</span>
+    <span class="n">y1</span> <span class="o">=</span> <span class="n">y1</span><span class="p">[</span><span class="n">non_horizontal</span><span class="p">]</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">x2</span><span class="p">[</span><span class="n">non_horizontal</span><span class="p">]</span>
+    <span class="n">y2</span> <span class="o">=</span> <span class="n">y2</span><span class="p">[</span><span class="n">non_horizontal</span><span class="p">]</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">dy</span><span class="p">[</span><span class="n">non_horizontal</span><span class="p">]</span>
+
+    <span class="c1"># Ray casting condition</span>
+    <span class="n">cond</span> <span class="o">=</span> <span class="p">((</span><span class="n">y1</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span> <span class="o">!=</span> <span class="p">(</span><span class="n">y2</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">))</span>
+
+    <span class="n">xinters</span> <span class="o">=</span> <span class="p">(</span><span class="n">x2</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">x1</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">y1</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">/</span> <span class="n">dy</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">x1</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
+
+    <span class="n">crossings</span> <span class="o">=</span> <span class="n">cond</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">xinters</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">crossings</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span></div>
+
+
+
+<div class="viewcode-block" id="partition_points_by_polygons">
+<a class="viewcode-back" href="../../generated/pyssaBSS.spatial.html#pyssaBSS.spatial.partition_points_by_polygons">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">partition_points_by_polygons</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">polygons</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Partition of coordinates based on the first polygon which contains them.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    coordinates : ndarray of shape (n, 2)</span>
+<span class="sd">    polygons : list of ndarrays of shape (num_vertices, 2) </span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    partition: list(list(int))</span>
+<span class="sd">        A list of lists of indices. Each list is a part. Each part is a list of indices of coordinates</span>
+<span class="sd">        lying inside that rectangle. </span>
+<span class="sd">    unassigned: list(int)</span>
+<span class="sd">        list of coordinates that were in no polygon</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+
+    <span class="n">partitions</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">assigned</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">poly</span> <span class="ow">in</span> <span class="n">polygons</span><span class="p">:</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">points_in_polygon</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">poly</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">~</span><span class="n">assigned</span><span class="p">)</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">partitions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+        <span class="n">assigned</span> <span class="o">|=</span> <span class="n">mask</span>
+
+    <span class="n">unassigned</span> <span class="o">=</span> <span class="n">points</span><span class="p">[</span><span class="o">~</span><span class="n">assigned</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">partitions</span><span class="p">,</span> <span class="n">unassigned</span></div>
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Perttu Saarela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

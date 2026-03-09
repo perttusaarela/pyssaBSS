@@ -1,0 +1,385 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyssaBSS.utils &mdash; pyssaBSS 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Examples" href="../examples.html" />
+    <link rel="prev" title="pyssaBSS.types" href="pyssaBSS.types.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            pyssaBSS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pyssaBSS.html">pyssaBSS</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.AugmentationRankEstimator"><code class="docutils literal notranslate"><span class="pre">AugmentationRankEstimator</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.PolygonDrawer"><code class="docutils literal notranslate"><span class="pre">PolygonDrawer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SPSSA"><code class="docutils literal notranslate"><span class="pre">SPSSA</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SPSSA_COMB"><code class="docutils literal notranslate"><span class="pre">SPSSA_COMB()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SPSSA_LCOR"><code class="docutils literal notranslate"><span class="pre">SPSSA_LCOR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SPSSA_SAVE"><code class="docutils literal notranslate"><span class="pre">SPSSA_SAVE()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SPSSA_SIR"><code class="docutils literal notranslate"><span class="pre">SPSSA_SIR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SSA"><code class="docutils literal notranslate"><span class="pre">SSA</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SSA_COMB"><code class="docutils literal notranslate"><span class="pre">SSA_COMB()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SSA_COR"><code class="docutils literal notranslate"><span class="pre">SSA_COR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SSA_SAVE"><code class="docutils literal notranslate"><span class="pre">SSA_SAVE()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SSA_SIR"><code class="docutils literal notranslate"><span class="pre">SSA_SIR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.joint_diagonalization"><code class="docutils literal notranslate"><span class="pre">joint_diagonalization()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.jdc.html">pyssaBSS.jdc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.joint_diag.html">pyssaBSS.joint_diag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.kernels.html">pyssaBSS.kernels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.polygon.html">pyssaBSS.polygon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.scatter.html">pyssaBSS.scatter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.spatial.html">pyssaBSS.spatial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.spssa.html">pyssaBSS.spssa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.ssa.html">pyssaBSS.ssa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.types.html">pyssaBSS.types</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">pyssaBSS.utils</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.utils.ball_kernel_local_sample_covariance"><code class="docutils literal notranslate"><span class="pre">ball_kernel_local_sample_covariance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.utils.gaussian_kernel_local_sample_covariance"><code class="docutils literal notranslate"><span class="pre">gaussian_kernel_local_sample_covariance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.utils.generate_random_invertible_matrix"><code class="docutils literal notranslate"><span class="pre">generate_random_invertible_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.utils.generate_random_orthogonal_matrix"><code class="docutils literal notranslate"><span class="pre">generate_random_orthogonal_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.utils.ring_kernel_local_sample_covariance"><code class="docutils literal notranslate"><span class="pre">ring_kernel_local_sample_covariance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.utils.sample_autocovariance"><code class="docutils literal notranslate"><span class="pre">sample_autocovariance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.utils.sample_covariance"><code class="docutils literal notranslate"><span class="pre">sample_covariance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.utils.sample_mean"><code class="docutils literal notranslate"><span class="pre">sample_mean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.utils.scaled_local_sample_covariance"><code class="docutils literal notranslate"><span class="pre">scaled_local_sample_covariance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.utils.standardize_data"><code class="docutils literal notranslate"><span class="pre">standardize_data()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyssaBSS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="pyssaBSS.html">pyssaBSS</a></li>
+      <li class="breadcrumb-item active">pyssaBSS.utils</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/generated/pyssaBSS.utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-pyssaBSS.utils">
+<span id="pyssabss-utils"></span><h1>pyssaBSS.utils<a class="headerlink" href="#module-pyssaBSS.utils" title="Link to this heading"></a></h1>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyssaBSS.utils.ball_kernel_local_sample_covariance" title="pyssaBSS.utils.ball_kernel_local_sample_covariance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ball_kernel_local_sample_covariance</span></code></a>(data, ...)</p></td>
+<td><p>Computes the local covariance using a ball kernel.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyssaBSS.utils.gaussian_kernel_local_sample_covariance" title="pyssaBSS.utils.gaussian_kernel_local_sample_covariance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gaussian_kernel_local_sample_covariance</span></code></a>(...)</p></td>
+<td><p>Computes the local covariance using a ring kernel.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyssaBSS.utils.generate_random_invertible_matrix" title="pyssaBSS.utils.generate_random_invertible_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_random_invertible_matrix</span></code></a>(p)</p></td>
+<td><p>Generate a random invertible matrix of size p x p</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyssaBSS.utils.generate_random_orthogonal_matrix" title="pyssaBSS.utils.generate_random_orthogonal_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_random_orthogonal_matrix</span></code></a>(n)</p></td>
+<td><p>Generate a random orthogonal matrix of size n x n</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyssaBSS.utils.ring_kernel_local_sample_covariance" title="pyssaBSS.utils.ring_kernel_local_sample_covariance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ring_kernel_local_sample_covariance</span></code></a>(data, ...)</p></td>
+<td><p>Computes the local covariance using a ring kernel.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyssaBSS.utils.sample_autocovariance" title="pyssaBSS.utils.sample_autocovariance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample_autocovariance</span></code></a>(data, lag[, segment, ...])</p></td>
+<td><p>Sample autocovariance matrix at a given lag.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyssaBSS.utils.sample_covariance" title="pyssaBSS.utils.sample_covariance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample_covariance</span></code></a>(data[, segment, seg_mean])</p></td>
+<td><p>Compute the covariance of the data points.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyssaBSS.utils.sample_mean" title="pyssaBSS.utils.sample_mean"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample_mean</span></code></a>(data[, segment])</p></td>
+<td><p>Compute the mean of the data points.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyssaBSS.utils.scaled_local_sample_covariance" title="pyssaBSS.utils.scaled_local_sample_covariance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scaled_local_sample_covariance</span></code></a>(data, coords, ...)</p></td>
+<td><p>Computes the scaled local covariance using a ball kernel.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyssaBSS.utils.standardize_data" title="pyssaBSS.utils.standardize_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">standardize_data</span></code></a>(data)</p></td>
+<td><p>Standardize the data.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.utils.ball_kernel_local_sample_covariance">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.utils.</span></span><span class="sig-name descname"><span class="pre">ball_kernel_local_sample_covariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seg_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/utils.html#ball_kernel_local_sample_covariance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.utils.ball_kernel_local_sample_covariance" title="Link to this definition"></a></dt>
+<dd><p>Computes the local covariance using a ball kernel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>p</em><em>, </em><em>n</em><em>)</em>)</p></li>
+<li><p><strong>coords</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>n</em><em>, </em><em>2</em><em>)</em>)</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – radius of the ball kernel</p></li>
+<li><p><strong>segment</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – indicates a subset of indices over which the local covariance is computed</p></li>
+<li><p><strong>seg_mean</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>p</em><em>, </em><em>1</em><em>)</em><em>, </em><em>optional</em>) – A precomputed mean of the segment. If None, it is computed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>l_cov</strong> – local (spatial) covariance matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray of shape (p, p)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.utils.gaussian_kernel_local_sample_covariance">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.utils.</span></span><span class="sig-name descname"><span class="pre">gaussian_kernel_local_sample_covariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seg_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/utils.html#gaussian_kernel_local_sample_covariance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.utils.gaussian_kernel_local_sample_covariance" title="Link to this definition"></a></dt>
+<dd><p>Computes the local covariance using a ring kernel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>p</em><em>, </em><em>n</em><em>)</em>)</p></li>
+<li><p><strong>coords</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>n</em><em>, </em><em>2</em><em>)</em>)</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – radius of the gaussian kernel</p></li>
+<li><p><strong>segment</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – indicates a subset of indices over which the local covariance is computed</p></li>
+<li><p><strong>seg_mean</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>p</em><em>, </em><em>1</em><em>)</em><em>, </em><em>optional</em>) – A precomputed mean of the segment. If None, it is computed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>l_cov</strong> – local (spatial) covariance matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray of shape (p, p)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.utils.generate_random_invertible_matrix">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.utils.</span></span><span class="sig-name descname"><span class="pre">generate_random_invertible_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/utils.html#generate_random_invertible_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.utils.generate_random_invertible_matrix" title="Link to this definition"></a></dt>
+<dd><p>Generate a random invertible matrix of size p x p</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>p</strong> (<em>int</em>) – Number of rows and columns</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ndarray of shape (p, p)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.utils.generate_random_orthogonal_matrix">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.utils.</span></span><span class="sig-name descname"><span class="pre">generate_random_orthogonal_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/utils.html#generate_random_orthogonal_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.utils.generate_random_orthogonal_matrix" title="Link to this definition"></a></dt>
+<dd><p>Generate a random orthogonal matrix of size n x n</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n</strong> (<em>int</em>) – Number of rows and columns</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ndarray of shape (n, n)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.utils.ring_kernel_local_sample_covariance">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.utils.</span></span><span class="sig-name descname"><span class="pre">ring_kernel_local_sample_covariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inner_radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outer_radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seg_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/utils.html#ring_kernel_local_sample_covariance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.utils.ring_kernel_local_sample_covariance" title="Link to this definition"></a></dt>
+<dd><p>Computes the local covariance using a ring kernel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>p</em><em>, </em><em>n</em><em>)</em>)</p></li>
+<li><p><strong>coords</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>n</em><em>, </em><em>2</em><em>)</em>)</p></li>
+<li><p><strong>inner_radius</strong> (<em>float</em>) – inner radius of the ring kernel</p></li>
+<li><p><strong>outer_radius</strong> (<em>float</em>) – outer radius of the ring kernel</p></li>
+<li><p><strong>segment</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – indicates a subset of indices over which the local covariance is computed</p></li>
+<li><p><strong>seg_mean</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>p</em><em>, </em><em>1</em><em>)</em><em>, </em><em>optional</em>) – A precomputed mean of the segment. If None, it is computed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>l_cov</strong> – local (spatial) covariance matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray of shape (p, p)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.utils.sample_autocovariance">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.utils.</span></span><span class="sig-name descname"><span class="pre">sample_autocovariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seg_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/utils.html#sample_autocovariance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.utils.sample_autocovariance" title="Link to this definition"></a></dt>
+<dd><p>Sample autocovariance matrix at a given lag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>p</em><em>, </em><em>n</em><em>)</em>)</p></li>
+<li><p><strong>lag</strong> (<em>int</em>) – Lag at which to compute autocovariance. Must be &gt;= 0.</p></li>
+<li><p><strong>segment</strong> (<em>ndarray</em><em> of </em><em>int indices</em><em>, </em><em>optional</em>)</p></li>
+<li><p><strong>seg_mean</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>p</em><em>,</em><em>) or </em><em>(</em><em>p</em><em>, </em><em>1</em><em>)</em><em>, </em><em>optional</em>) – If None, computed from the segment.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>acov</strong> – Not necessarily symmetric (acov(lag) != acov(lag).T for lag &gt; 0).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray of shape (p, p)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.utils.sample_covariance">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.utils.</span></span><span class="sig-name descname"><span class="pre">sample_covariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seg_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/utils.html#sample_covariance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.utils.sample_covariance" title="Link to this definition"></a></dt>
+<dd><p>Compute the covariance of the data points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>p</em><em>, </em><em>n</em><em>)</em>)</p></li>
+<li><p><strong>segment</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – if provided, compute the covariance over the given indices</p></li>
+<li><p><strong>seg_mean</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – if provided, the mean is not recomputed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ndarray of shape (p, p)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.utils.sample_mean">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.utils.</span></span><span class="sig-name descname"><span class="pre">sample_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/utils.html#sample_mean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.utils.sample_mean" title="Link to this definition"></a></dt>
+<dd><p>Compute the mean of the data points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>p</em><em>, </em><em>n</em><em>)</em>) – if provided, compute the covariance over the given indi</p></li>
+<li><p><strong>segment</strong> (<em>ndarray</em><em>, </em><em>optional</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ndarray of shape (p,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.utils.scaled_local_sample_covariance">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.utils.</span></span><span class="sig-name descname"><span class="pre">scaled_local_sample_covariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seg_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/utils.html#scaled_local_sample_covariance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.utils.scaled_local_sample_covariance" title="Link to this definition"></a></dt>
+<dd><p>Computes the scaled local covariance using a ball kernel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>p</em><em>, </em><em>n</em><em>)</em>)</p></li>
+<li><p><strong>coords</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>n</em><em>, </em><em>2</em><em>)</em>)</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – radius of the ball kernel</p></li>
+<li><p><strong>segment</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – indicates a subset of indices over which the local covariance is computed</p></li>
+<li><p><strong>seg_mean</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>p</em><em>, </em><em>1</em><em>)</em><em>, </em><em>optional</em>) – A precomputed mean of the segment. If None, it is computed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>l_cov</strong> – local (spatial) covariance matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray of shape (p, p)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.utils.standardize_data">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.utils.</span></span><span class="sig-name descname"><span class="pre">standardize_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/utils.html#standardize_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.utils.standardize_data" title="Link to this definition"></a></dt>
+<dd><p>Standardize the data.</p>
+<p>Afterwards, data has mean 0 and covariance I.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>p</em><em>, </em><em>n</em><em>)</em>)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>white_data</strong> (<em>ndarray of shape (p, n)</em>) – data after standardization</p></li>
+<li><p><strong>whitener</strong> (<em>ndarray of shape (p, p)</em>) – inverse square root of the covariance</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pyssaBSS.types.html" class="btn btn-neutral float-left" title="pyssaBSS.types" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Perttu Saarela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

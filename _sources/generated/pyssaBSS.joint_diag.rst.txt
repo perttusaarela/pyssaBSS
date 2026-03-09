@@ -1,0 +1,6 @@
+pyssaBSS.joint\_diag
+====================
+
+.. automodule:: pyssaBSS.joint_diag
+
+   

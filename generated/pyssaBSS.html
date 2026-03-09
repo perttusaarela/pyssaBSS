@@ -1,0 +1,674 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyssaBSS &mdash; pyssaBSS 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pyssaBSS.jdc" href="pyssaBSS.jdc.html" />
+    <link rel="prev" title="API Reference" href="../api.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            pyssaBSS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pyssaBSS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pyssaBSS.AugmentationRankEstimator"><code class="docutils literal notranslate"><span class="pre">AugmentationRankEstimator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.AugmentationRankEstimator.estimate"><code class="docutils literal notranslate"><span class="pre">AugmentationRankEstimator.estimate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pyssaBSS.PolygonDrawer"><code class="docutils literal notranslate"><span class="pre">PolygonDrawer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.PolygonDrawer.MOVE_THRESHOLD"><code class="docutils literal notranslate"><span class="pre">PolygonDrawer.MOVE_THRESHOLD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.PolygonDrawer.SNAP_RADIUS_PX"><code class="docutils literal notranslate"><span class="pre">PolygonDrawer.SNAP_RADIUS_PX</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.PolygonDrawer.get_polygons"><code class="docutils literal notranslate"><span class="pre">PolygonDrawer.get_polygons()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.PolygonDrawer.on_click"><code class="docutils literal notranslate"><span class="pre">PolygonDrawer.on_click()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.PolygonDrawer.on_key"><code class="docutils literal notranslate"><span class="pre">PolygonDrawer.on_key()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.PolygonDrawer.on_move"><code class="docutils literal notranslate"><span class="pre">PolygonDrawer.on_move()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.PolygonDrawer.on_scroll"><code class="docutils literal notranslate"><span class="pre">PolygonDrawer.on_scroll()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.PolygonDrawer.save"><code class="docutils literal notranslate"><span class="pre">PolygonDrawer.save()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pyssaBSS.SPSSA"><code class="docutils literal notranslate"><span class="pre">SPSSA</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.SPSSA.whitener_"><code class="docutils literal notranslate"><span class="pre">SPSSA.whitener_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.SPSSA.diagonalizer_"><code class="docutils literal notranslate"><span class="pre">SPSSA.diagonalizer_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.SPSSA.eigenvalues_"><code class="docutils literal notranslate"><span class="pre">SPSSA.eigenvalues_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.SPSSA.individual_models_"><code class="docutils literal notranslate"><span class="pre">SPSSA.individual_models_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.SPSSA.estimated_rank_"><code class="docutils literal notranslate"><span class="pre">SPSSA.estimated_rank_</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pyssaBSS.SPSSA_COMB"><code class="docutils literal notranslate"><span class="pre">SPSSA_COMB()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyssaBSS.SPSSA_LCOR"><code class="docutils literal notranslate"><span class="pre">SPSSA_LCOR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyssaBSS.SPSSA_SAVE"><code class="docutils literal notranslate"><span class="pre">SPSSA_SAVE()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyssaBSS.SPSSA_SIR"><code class="docutils literal notranslate"><span class="pre">SPSSA_SIR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyssaBSS.SSA"><code class="docutils literal notranslate"><span class="pre">SSA</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.SSA.whitener_"><code class="docutils literal notranslate"><span class="pre">SSA.whitener_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.SSA.diagonalizer_"><code class="docutils literal notranslate"><span class="pre">SSA.diagonalizer_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.SSA.eigenvalues_"><code class="docutils literal notranslate"><span class="pre">SSA.eigenvalues_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.SSA.individual_models_"><code class="docutils literal notranslate"><span class="pre">SSA.individual_models_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.SSA.estimated_rank_"><code class="docutils literal notranslate"><span class="pre">SSA.estimated_rank_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.SSA.rank_summary_"><code class="docutils literal notranslate"><span class="pre">SSA.rank_summary_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.SSA.eigenvalues"><code class="docutils literal notranslate"><span class="pre">SSA.eigenvalues</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.SSA.estimate_rank"><code class="docutils literal notranslate"><span class="pre">SSA.estimate_rank()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.SSA.subspaces"><code class="docutils literal notranslate"><span class="pre">SSA.subspaces()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.SSA.whitener"><code class="docutils literal notranslate"><span class="pre">SSA.whitener</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pyssaBSS.SSA_COMB"><code class="docutils literal notranslate"><span class="pre">SSA_COMB()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyssaBSS.SSA_COR"><code class="docutils literal notranslate"><span class="pre">SSA_COR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyssaBSS.SSA_SAVE"><code class="docutils literal notranslate"><span class="pre">SSA_SAVE()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyssaBSS.SSA_SIR"><code class="docutils literal notranslate"><span class="pre">SSA_SIR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyssaBSS.joint_diagonalization"><code class="docutils literal notranslate"><span class="pre">joint_diagonalization()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.jdc.html">pyssaBSS.jdc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.joint_diag.html">pyssaBSS.joint_diag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.kernels.html">pyssaBSS.kernels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.polygon.html">pyssaBSS.polygon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.scatter.html">pyssaBSS.scatter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.spatial.html">pyssaBSS.spatial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.spssa.html">pyssaBSS.spssa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.ssa.html">pyssaBSS.ssa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.types.html">pyssaBSS.types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.utils.html">pyssaBSS.utils</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyssaBSS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+      <li class="breadcrumb-item active">pyssaBSS</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/generated/pyssaBSS.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-pyssaBSS">
+<span id="pyssabss"></span><h1>pyssaBSS<a class="headerlink" href="#module-pyssaBSS" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyssaBSS.AugmentationRankEstimator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyssaBSS.</span></span><span class="sig-name descname"><span class="pre">AugmentationRankEstimator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">noise_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_rep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/ssa.html#AugmentationRankEstimator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.AugmentationRankEstimator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Rank estimator based on data augmentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>noise_dim</strong> (<em>int</em>) – Number of Gaussian noise components to append.</p></li>
+<li><p><strong>num_rep</strong> (<em>int</em>) – Number of augmentation trials.</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em> or </em><em>None</em>) – Random seed for reproducibility.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyssaBSS.AugmentationRankEstimator.estimate">
+<span class="sig-name descname"><span class="pre">estimate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/ssa.html#AugmentationRankEstimator.estimate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.AugmentationRankEstimator.estimate" title="Link to this definition"></a></dt>
+<dd><p>Estimate rank by combining measurements of norms of augmented eigenvectors
+and normalised scree plot of eigenvalues.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>model</strong> (<a class="reference internal" href="#pyssaBSS.SSA" title="pyssaBSS.SSA"><em>SSA</em></a>) – An SSA model to compute the eigendecompositions.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="pyssaBSS.types.html#pyssaBSS.types.RankResult" title="pyssaBSS.types.RankResult">RankResult</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyssaBSS.PolygonDrawer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyssaBSS.</span></span><span class="sig-name descname"><span class="pre">PolygonDrawer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'polygons.json'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/polygon.html#PolygonDrawer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.PolygonDrawer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Polygon drawer</p>
+<p>This can be used to construct polygonal partitions of data points
+on a given map. The partition can then be saved a JSON file and
+used for the SPSSA methods.</p>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>Initialize:</dt><dd><p>drawer = PolygonDrawer(ax, points)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Draw polygons:</dt><dd><p>plt.show()</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Save polygons:</dt><dd><p>drawer.save(“polygons.json”)</p>
+</dd>
+</dl>
+</li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">type ax<span class="colon">:</span></dt>
+<dd class="field-odd"><p>an ax object from pyplot</p>
+</dd>
+<dt class="field-even">param ax<span class="colon">:</span></dt>
+<dd class="field-even"><p>this is the map on which we draw. The drawer assumes that this is
+already constructed (e.g. from png and a bounding box)</p>
+</dd>
+<dt class="field-odd">type ax<span class="colon">:</span></dt>
+<dd class="field-odd"><p>an ax object from pyplot</p>
+</dd>
+<dt class="field-even">type points<span class="colon">:</span></dt>
+<dd class="field-even"><p>ndarray of shape (n, 2)</p>
+</dd>
+<dt class="field-odd">param points<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the coordinates of the points we want to partition.
+The points should lie inside the bounding box of the ax figure.</p>
+</dd>
+<dt class="field-even">type points<span class="colon">:</span></dt>
+<dd class="field-even"><p>ndarray of shape (n, 2)</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyssaBSS.PolygonDrawer.MOVE_THRESHOLD">
+<span class="sig-name descname"><span class="pre">MOVE_THRESHOLD</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></span><a class="headerlink" href="#pyssaBSS.PolygonDrawer.MOVE_THRESHOLD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyssaBSS.PolygonDrawer.SNAP_RADIUS_PX">
+<span class="sig-name descname"><span class="pre">SNAP_RADIUS_PX</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></span><a class="headerlink" href="#pyssaBSS.PolygonDrawer.SNAP_RADIUS_PX" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyssaBSS.PolygonDrawer.get_polygons">
+<span class="sig-name descname"><span class="pre">get_polygons</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/polygon.html#PolygonDrawer.get_polygons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.PolygonDrawer.get_polygons" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyssaBSS.PolygonDrawer.on_click">
+<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/polygon.html#PolygonDrawer.on_click"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.PolygonDrawer.on_click" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyssaBSS.PolygonDrawer.on_key">
+<span class="sig-name descname"><span class="pre">on_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/polygon.html#PolygonDrawer.on_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.PolygonDrawer.on_key" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyssaBSS.PolygonDrawer.on_move">
+<span class="sig-name descname"><span class="pre">on_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/polygon.html#PolygonDrawer.on_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.PolygonDrawer.on_move" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyssaBSS.PolygonDrawer.on_scroll">
+<span class="sig-name descname"><span class="pre">on_scroll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/polygon.html#PolygonDrawer.on_scroll"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.PolygonDrawer.on_scroll" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyssaBSS.PolygonDrawer.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/polygon.html#PolygonDrawer.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.PolygonDrawer.save" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyssaBSS.SPSSA">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyssaBSS.</span></span><span class="sig-name descname"><span class="pre">SPSSA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim_estimator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/spssa.html#SPSSA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.SPSSA" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyssaBSS.ssa.html#pyssaBSS.ssa.SSA" title="pyssaBSS.ssa.SSA"><code class="xref py py-class docutils literal notranslate"><span class="pre">SSA</span></code></a></p>
+<p>Spatial Stationary Subspace Analysis (SPSSA)</p>
+<p class="rubric">Examples</p>
+<p>Initialize the model:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">SPSSA</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">scatter</span><span class="o">=</span><span class="n">scatter</span><span class="p">,</span> <span class="n">partition</span><span class="o">=</span><span class="n">partition</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Optionally estimate the rank of the nonstationary subspace:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">q</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">estimate_rank</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Extract stationary and nonstationary subspaces:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ss</span><span class="p">,</span> <span class="n">ns</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">subspaces</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>n_signals</em><em>, </em><em>n_samples</em><em>)</em>) – Observed data matrix. Decomposition is performed immediately on construction.</p></li>
+<li><p><strong>coords</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – Spatial coordinates passed to the segmentation function.
+Required when no pre-computed partition are provided.</p></li>
+<li><p><strong>partition</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – Pre-computed segment labels.</p></li>
+<li><p><strong>scatter</strong> (<em>dict</em><em>, </em><em>list</em><em>, or </em><em>scatter object</em>) – Scatter matrices or operators for subspace analysis.</p></li>
+<li><p><strong>dim_estimator</strong> (<a class="reference internal" href="#pyssaBSS.AugmentationRankEstimator" title="pyssaBSS.AugmentationRankEstimator"><em>AugmentationRankEstimator</em></a><em>, </em><em>optional</em>) – An object to compute an estimate of the nonstationary dimension.
+Currently only support one kind of estimator but could be easily
+extended to include different estimators.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyssaBSS.SPSSA.whitener_">
+<span class="sig-name descname"><span class="pre">whitener_</span></span><a class="headerlink" href="#pyssaBSS.SPSSA.whitener_" title="Link to this definition"></a></dt>
+<dd><p>Whitening matrix from data standardization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyssaBSS.SPSSA.diagonalizer_">
+<span class="sig-name descname"><span class="pre">diagonalizer_</span></span><a class="headerlink" href="#pyssaBSS.SPSSA.diagonalizer_" title="Link to this definition"></a></dt>
+<dd><p>Matrix that diagonalizes the scatter matrices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyssaBSS.SPSSA.eigenvalues_">
+<span class="sig-name descname"><span class="pre">eigenvalues_</span></span><a class="headerlink" href="#pyssaBSS.SPSSA.eigenvalues_" title="Link to this definition"></a></dt>
+<dd><p>Eigenvalues from the diagonalization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyssaBSS.SPSSA.individual_models_">
+<span class="sig-name descname"><span class="pre">individual_models_</span></span><a class="headerlink" href="#pyssaBSS.SPSSA.individual_models_" title="Link to this definition"></a></dt>
+<dd><p>Decomposed models for individual scatters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, <a class="reference internal" href="#pyssaBSS.SPSSA" title="pyssaBSS.SPSSA">SPSSA</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyssaBSS.SPSSA.estimated_rank_">
+<span class="sig-name descname"><span class="pre">estimated_rank_</span></span><a class="headerlink" href="#pyssaBSS.SPSSA.estimated_rank_" title="Link to this definition"></a></dt>
+<dd><p>Rank estimated by estimate_rank(), if called.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.SPSSA_COMB">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.</span></span><span class="sig-name descname"><span class="pre">SPSSA_COMB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/spssa.html#SPSSA_COMB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.SPSSA_COMB" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="pyssaBSS.spssa.html#pyssaBSS.spssa.SPSSA" title="pyssaBSS.spssa.SPSSA"><code class="xref py py-class docutils literal notranslate"><span class="pre">SPSSA</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.SPSSA_LCOR">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.</span></span><span class="sig-name descname"><span class="pre">SPSSA_LCOR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/spssa.html#SPSSA_LCOR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.SPSSA_LCOR" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="pyssaBSS.spssa.html#pyssaBSS.spssa.SPSSA" title="pyssaBSS.spssa.SPSSA"><code class="xref py py-class docutils literal notranslate"><span class="pre">SPSSA</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.SPSSA_SAVE">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.</span></span><span class="sig-name descname"><span class="pre">SPSSA_SAVE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/spssa.html#SPSSA_SAVE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.SPSSA_SAVE" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="pyssaBSS.spssa.html#pyssaBSS.spssa.SPSSA" title="pyssaBSS.spssa.SPSSA"><code class="xref py py-class docutils literal notranslate"><span class="pre">SPSSA</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.SPSSA_SIR">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.</span></span><span class="sig-name descname"><span class="pre">SPSSA_SIR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/spssa.html#SPSSA_SIR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.SPSSA_SIR" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="pyssaBSS.spssa.html#pyssaBSS.spssa.SPSSA" title="pyssaBSS.spssa.SPSSA"><code class="xref py py-class docutils literal notranslate"><span class="pre">SPSSA</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyssaBSS.SSA">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyssaBSS.</span></span><span class="sig-name descname"><span class="pre">SSA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim_estimator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/ssa.html#SSA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.SSA" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Stationary Subspace Analysis (SSA)</p>
+<p class="rubric">Examples</p>
+<p>Initialize the model:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">SSA</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">scatter</span><span class="o">=</span><span class="n">scatter</span><span class="p">,</span> <span class="n">partition</span><span class="o">=</span><span class="n">partition</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Optionally estimate the rank of the nonstationary subspace:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">q</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">estimate_rank</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Extract stationary and nonstationary subspaces:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ss</span><span class="p">,</span> <span class="n">ns</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">subspaces</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>n_signals</em><em>, </em><em>n_samples</em><em>)</em>) – Observed data matrix. Decomposition is performed immediately on construction.</p></li>
+<li><p><strong>partition</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – Partition labels for observations.</p></li>
+<li><p><strong>scatter</strong> (<em>dict</em><em>, </em><em>list</em><em>, or </em><em>scatter object</em>) – Scatter matrices or operators for subspace analysis.</p></li>
+<li><p><strong>dim_estimator</strong> (<a class="reference internal" href="#pyssaBSS.AugmentationRankEstimator" title="pyssaBSS.AugmentationRankEstimator"><em>AugmentationRankEstimator</em></a><em>, </em><em>optional</em>) – An object to compute an estimate of the nonstationary dimension.
+Currently only support one kind of estimator but could be easily
+extended to include different estimators.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyssaBSS.SSA.whitener_">
+<span class="sig-name descname"><span class="pre">whitener_</span></span><a class="headerlink" href="#pyssaBSS.SSA.whitener_" title="Link to this definition"></a></dt>
+<dd><p>Whitening matrix from data standardization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyssaBSS.SSA.diagonalizer_">
+<span class="sig-name descname"><span class="pre">diagonalizer_</span></span><a class="headerlink" href="#pyssaBSS.SSA.diagonalizer_" title="Link to this definition"></a></dt>
+<dd><p>Matrix that diagonalizes the scatter matrices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyssaBSS.SSA.eigenvalues_">
+<span class="sig-name descname"><span class="pre">eigenvalues_</span></span><a class="headerlink" href="#pyssaBSS.SSA.eigenvalues_" title="Link to this definition"></a></dt>
+<dd><p>Eigenvalues from the diagonalization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyssaBSS.SSA.individual_models_">
+<span class="sig-name descname"><span class="pre">individual_models_</span></span><a class="headerlink" href="#pyssaBSS.SSA.individual_models_" title="Link to this definition"></a></dt>
+<dd><p>Decomposed models for individual scatters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, <a class="reference internal" href="#pyssaBSS.SSA" title="pyssaBSS.SSA">SSA</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyssaBSS.SSA.estimated_rank_">
+<span class="sig-name descname"><span class="pre">estimated_rank_</span></span><a class="headerlink" href="#pyssaBSS.SSA.estimated_rank_" title="Link to this definition"></a></dt>
+<dd><p>Rank estimated by estimate_rank(), if called.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyssaBSS.SSA.rank_summary_">
+<span class="sig-name descname"><span class="pre">rank_summary_</span></span><a class="headerlink" href="#pyssaBSS.SSA.rank_summary_" title="Link to this definition"></a></dt>
+<dd><p>Full rank estimation diagnostics, if estimate_rank() has been called.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="pyssaBSS.types.html#pyssaBSS.types.SSARankSummary" title="pyssaBSS.types.SSARankSummary">SSARankSummary</a> or <a class="reference internal" href="pyssaBSS.types.html#pyssaBSS.types.RankResult" title="pyssaBSS.types.RankResult">RankResult</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyssaBSS.SSA.eigenvalues">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">eigenvalues</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#pyssaBSS.SSA.eigenvalues" title="Link to this definition"></a></dt>
+<dd><p>Eigenvalues from the scatter decomposition (copy).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyssaBSS.SSA.estimate_rank">
+<span class="sig-name descname"><span class="pre">estimate_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">individual</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/ssa.html#SSA.estimate_rank"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.SSA.estimate_rank" title="Link to this definition"></a></dt>
+<dd><p>Estimate the rank (dimension) of the nonstationary subspace.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>individual</strong> (<em>bool</em><em>, </em><em>default False</em>) – If True, also estimate rank for each individual scatter and store
+full results in <code class="docutils literal notranslate"><span class="pre">rank_summary_</span></code>. Slower but more informative.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Estimated rank of the nonstationary subspace.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyssaBSS.SSA.subspaces">
+<span class="sig-name descname"><span class="pre">subspaces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/ssa.html#SSA.subspaces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.SSA.subspaces" title="Link to this definition"></a></dt>
+<dd><p>Return the stationary and nonstationary subspace projection matrices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>q</strong> (<em>int</em><em>, </em><em>optional</em>) – Dimension of the nonstationary subspace. If omitted, uses the rank
+stored by a prior call to estimate_rank().</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">...</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">dtype</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float64</span></code>]], <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">...</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">dtype</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float64</span></code>]]]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>stationary</strong> (<em>ndarray of shape (n_signals - q, n_signals)</em>) – Projection onto the stationary subspace.</p></li>
+<li><p><strong>non_stationary</strong> (<em>ndarray of shape (q, n_signals)</em>) – Projection onto the nonstationary subspace.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyssaBSS.SSA.whitener">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">whitener</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#pyssaBSS.SSA.whitener" title="Link to this definition"></a></dt>
+<dd><p>Whitening matrix (copy).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.SSA_COMB">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.</span></span><span class="sig-name descname"><span class="pre">SSA_COMB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/ssa.html#SSA_COMB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.SSA_COMB" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="pyssaBSS.ssa.html#pyssaBSS.ssa.SSA" title="pyssaBSS.ssa.SSA"><code class="xref py py-class docutils literal notranslate"><span class="pre">SSA</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.SSA_COR">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.</span></span><span class="sig-name descname"><span class="pre">SSA_COR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/ssa.html#SSA_COR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.SSA_COR" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="pyssaBSS.ssa.html#pyssaBSS.ssa.SSA" title="pyssaBSS.ssa.SSA"><code class="xref py py-class docutils literal notranslate"><span class="pre">SSA</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.SSA_SAVE">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.</span></span><span class="sig-name descname"><span class="pre">SSA_SAVE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/ssa.html#SSA_SAVE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.SSA_SAVE" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="pyssaBSS.ssa.html#pyssaBSS.ssa.SSA" title="pyssaBSS.ssa.SSA"><code class="xref py py-class docutils literal notranslate"><span class="pre">SSA</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.SSA_SIR">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.</span></span><span class="sig-name descname"><span class="pre">SSA_SIR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/ssa.html#SSA_SIR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.SSA_SIR" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="pyssaBSS.ssa.html#pyssaBSS.ssa.SSA" title="pyssaBSS.ssa.SSA"><code class="xref py py-class docutils literal notranslate"><span class="pre">SSA</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyssaBSS.joint_diagonalization">
+<span class="sig-prename descclassname"><span class="pre">pyssaBSS.</span></span><span class="sig-name descname"><span class="pre">joint_diagonalization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/jdc.html#joint_diagonalization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.joint_diagonalization" title="Link to this definition"></a></dt>
+<dd><p>Approximate joint diagonalization</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>kp</em><em>, </em><em>p</em><em>)</em>) – A concatenation of the k p-by-p matrices to be jointly diagonalized</p></li>
+<li><p><strong>weight</strong> (<em>list</em><em>(</em><em>float</em><em>)</em><em>, </em><em>optional</em>) – A list of weights given to each matrix, prior to diagonalization</p></li>
+<li><p><strong>maxiter</strong> (<em>int</em>) – maximum number of iteration in the algorithm before finishing.
+An assertion is raised if no convergence is found in this time.</p></li>
+<li><p><strong>eps</strong> (<em>float</em>) – convergence tolerance</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>V</strong> (<em>ndarray of shape (p, p)</em>) – joint diagonalized</p></li>
+<li><p><strong>D</strong> (<em>list of ndarrays of shape (p, p)</em>) – Gives the “diagonalized” matrices from the procedure in a list</p></li>
+<li><p><strong>iter</strong> (<em>int</em>) – total number of iterations</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Modules</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="pyssaBSS.jdc.html#module-pyssaBSS.jdc" title="pyssaBSS.jdc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jdc</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="pyssaBSS.joint_diag.html#module-pyssaBSS.joint_diag" title="pyssaBSS.joint_diag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">joint_diag</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="pyssaBSS.kernels.html#module-pyssaBSS.kernels" title="pyssaBSS.kernels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kernels</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="pyssaBSS.polygon.html#module-pyssaBSS.polygon" title="pyssaBSS.polygon"><code class="xref py py-obj docutils literal notranslate"><span class="pre">polygon</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="pyssaBSS.scatter.html#module-pyssaBSS.scatter" title="pyssaBSS.scatter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scatter</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="pyssaBSS.spatial.html#module-pyssaBSS.spatial" title="pyssaBSS.spatial"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spatial</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="pyssaBSS.spssa.html#module-pyssaBSS.spssa" title="pyssaBSS.spssa"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spssa</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="pyssaBSS.ssa.html#module-pyssaBSS.ssa" title="pyssaBSS.ssa"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ssa</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="pyssaBSS.types.html#module-pyssaBSS.types" title="pyssaBSS.types"><code class="xref py py-obj docutils literal notranslate"><span class="pre">types</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="pyssaBSS.utils.html#module-pyssaBSS.utils" title="pyssaBSS.utils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">utils</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../api.html" class="btn btn-neutral float-left" title="API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pyssaBSS.jdc.html" class="btn btn-neutral float-right" title="pyssaBSS.jdc" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Perttu Saarela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

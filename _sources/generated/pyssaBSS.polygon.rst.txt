@@ -1,0 +1,12 @@
+pyssaBSS.polygon
+================
+
+.. automodule:: pyssaBSS.polygon
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      PolygonDrawer
+   

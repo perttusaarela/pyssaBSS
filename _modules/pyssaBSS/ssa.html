@@ -1,0 +1,548 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyssaBSS.ssa &mdash; pyssaBSS 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            pyssaBSS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pyssaBSS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pyssaBSS.ssa</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pyssaBSS.ssa</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NDArray</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">SSAError</span><span class="p">,</span> <span class="n">SSARankSummary</span><span class="p">,</span> <span class="n">RankResult</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">standardize_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.jdc</span><span class="w"> </span><span class="kn">import</span> <span class="n">joint_diagonalization</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.scatter</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="SSA">
+<a class="viewcode-back" href="../../generated/pyssaBSS.ssa.html#pyssaBSS.SSA">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SSA</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Stationary Subspace Analysis (SSA)</span>
+
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    Initialize the model::</span>
+
+<span class="sd">        model = SSA(data, coords, scatter=scatter, partition=partition)</span>
+
+<span class="sd">    Optionally estimate the rank of the nonstationary subspace::</span>
+
+<span class="sd">        q = model.estimate_rank()</span>
+
+<span class="sd">    Extract stationary and nonstationary subspaces::</span>
+
+<span class="sd">        ss, ns = model.subspaces(q)</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : ndarray of shape (n_signals, n_samples)</span>
+<span class="sd">        Observed data matrix. Decomposition is performed immediately on construction.</span>
+<span class="sd">    partition : ndarray, optional</span>
+<span class="sd">        Partition labels for observations.</span>
+<span class="sd">    scatter : dict, list, or scatter object</span>
+<span class="sd">        Scatter matrices or operators for subspace analysis.</span>
+<span class="sd">    dim_estimator : AugmentationRankEstimator, optional</span>
+<span class="sd">        An object to compute an estimate of the nonstationary dimension.</span>
+<span class="sd">        Currently only support one kind of estimator but could be easily</span>
+<span class="sd">        extended to include different estimators.</span>
+
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    whitener_ : ndarray</span>
+<span class="sd">        Whitening matrix from data standardization.</span>
+<span class="sd">    diagonalizer_ : ndarray</span>
+<span class="sd">        Matrix that diagonalizes the scatter matrices.</span>
+<span class="sd">    eigenvalues_ : ndarray</span>
+<span class="sd">        Eigenvalues from the diagonalization.</span>
+<span class="sd">    individual_models_ : dict[str, SSA]</span>
+<span class="sd">        Decomposed models for individual scatters.</span>
+<span class="sd">    estimated_rank_ : int or None</span>
+<span class="sd">        Rank estimated by estimate_rank(), if called.</span>
+<span class="sd">    rank_summary_ : SSARankSummary or RankResult</span>
+<span class="sd">        Full rank estimation diagnostics, if estimate_rank() has been called.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">data</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+            <span class="n">partition</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">,</span>
+            <span class="n">scatter</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Any</span><span class="p">],</span>
+            <span class="n">dim_estimator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">&#39;AugmentationRankEstimator&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scatters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_scatter</span><span class="p">(</span><span class="n">scatter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dim_estimator</span> <span class="o">=</span> <span class="n">dim_estimator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">estimated_rank_</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">white_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">whitener_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_partition_</span> <span class="o">=</span> <span class="n">partition</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_decompose_from_white</span><span class="p">(</span><span class="n">white_data</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------</span>
+    <span class="c1"># Public API</span>
+    <span class="c1"># ------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="SSA.estimate_rank">
+<a class="viewcode-back" href="../../generated/pyssaBSS.ssa.html#pyssaBSS.SSA.estimate_rank">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">estimate_rank</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Estimate the rank (dimension) of the nonstationary subspace.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        individual : bool, default False</span>
+<span class="sd">            If True, also estimate rank for each individual scatter and store</span>
+<span class="sd">            full results in ``rank_summary_``. Slower but more informative.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">            Estimated rank of the nonstationary subspace.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim_estimator</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;No dimension estimator specified. &quot;</span>
+                <span class="s2">&quot;Pass dim_estimator= at construction, or use a convenience &quot;</span>
+                <span class="s2">&quot;constructor such as SSA_SIR().&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clone_without_dim_estimator</span><span class="p">()</span>
+        <span class="n">joint_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim_estimator</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">individual</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scatters</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">individual_results</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">name</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim_estimator</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">temp</span><span class="o">.</span><span class="n">individual_models_</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="p">}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rank_summary_</span> <span class="o">=</span> <span class="n">SSARankSummary</span><span class="p">(</span>
+                <span class="n">joint</span><span class="o">=</span><span class="n">joint_result</span><span class="p">,</span>
+                <span class="n">individual</span><span class="o">=</span><span class="n">individual_results</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rank_summary_</span> <span class="o">=</span> <span class="n">joint_result</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">estimated_rank_</span> <span class="o">=</span> <span class="n">joint_result</span><span class="o">.</span><span class="n">rank</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimated_rank_</span></div>
+
+
+<div class="viewcode-block" id="SSA.subspaces">
+<a class="viewcode-back" href="../../generated/pyssaBSS.ssa.html#pyssaBSS.SSA.subspaces">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">subspaces</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the stationary and nonstationary subspace projection matrices.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        q : int, optional</span>
+<span class="sd">            Dimension of the nonstationary subspace. If omitted, uses the rank</span>
+<span class="sd">            stored by a prior call to estimate_rank().</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        stationary : ndarray of shape (n_signals - q, n_signals)</span>
+<span class="sd">            Projection onto the stationary subspace.</span>
+<span class="sd">        non_stationary : ndarray of shape (q, n_signals)</span>
+<span class="sd">            Projection onto the nonstationary subspace.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">q</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimated_rank_</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;No rank available. Either pass q= explicitly or call estimate_rank() first.&quot;</span>
+                <span class="p">)</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimated_rank_</span>
+
+        <span class="n">n_components</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">diagonalizer_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">q</span> <span class="o">&lt;=</span> <span class="n">n_components</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;q must be between 0 and </span><span class="si">{</span><span class="n">n_components</span><span class="si">}</span><span class="s2">, got </span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">V</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">diagonalizer_</span>
+            <span class="n">non_stationary</span> <span class="o">=</span> <span class="n">V</span><span class="p">[:,</span> <span class="p">:</span><span class="n">q</span><span class="p">]</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">whitener_</span>
+            <span class="n">stationary</span> <span class="o">=</span> <span class="n">V</span><span class="p">[:,</span> <span class="n">q</span><span class="p">:]</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">whitener_</span>
+            <span class="k">return</span> <span class="n">stationary</span><span class="p">,</span> <span class="n">non_stationary</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">SSAError</span><span class="p">(</span>
+                <span class="s2">&quot;Decomposition attributes are missing. The model may not have &quot;</span>
+                <span class="s2">&quot;been constructed correctly.&quot;</span>
+            <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span></div>
+
+
+    <span class="c1"># ------------------------------------------------------------------</span>
+    <span class="c1"># Convenience properties</span>
+    <span class="c1"># ------------------------------------------------------------------</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eigenvalues</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Eigenvalues from the scatter decomposition (copy).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eigenvalues_</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">whitener</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Whitening matrix (copy).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">whitener_</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c1"># ------------------------------------------------------------------</span>
+    <span class="c1"># Internal helpers</span>
+    <span class="c1"># ------------------------------------------------------------------</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_scatter</span><span class="p">(</span><span class="n">scatter</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">scatter</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;At least one scatter must be provided&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scatter</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">scatter</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Scatter dict keys must be strings&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">scatter</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s1">&#39;compute&#39;</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Scatter &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; missing required &#39;compute&#39; method&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">scatter</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scatter</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">scatter</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Scatter list cannot be empty&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scatter</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">):</span>
+                <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">scatter</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">scatter</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s1">&#39;compute&#39;</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Scatter </span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2"> missing required &#39;compute&#39; method&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">{</span><span class="n">s</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">scatter</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">scatter</span><span class="p">,</span> <span class="s1">&#39;compute&#39;</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Scatter missing required &#39;compute&#39; method&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">{</span><span class="n">scatter</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">scatter</span><span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_prepare_data</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">data</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">]:</span>
+        <span class="c1"># checks on input data and data whitening </span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data must be a numpy array, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data must be 2-D, got shape </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data array is empty&quot;</span><span class="p">)</span>
+
+        <span class="n">white_data</span><span class="p">,</span> <span class="n">whitener</span> <span class="o">=</span> <span class="n">standardize_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">white_data</span><span class="p">,</span> <span class="n">whitener</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_decompose_from_white</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">white_data</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_white_data_</span> <span class="o">=</span> <span class="n">white_data</span>
+
+        <span class="n">matrices</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">individual_models_</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># dict for results from individual scatters</span>
+
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">scatter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scatters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">scatter</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">white_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_partition_</span><span class="p">)</span>
+            <span class="n">matrices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+            <span class="n">clone</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clone_without_dim_estimator</span><span class="p">()</span>
+            <span class="n">clone</span><span class="o">.</span><span class="n">_fit_single</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">individual_models_</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">clone</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fit_single</span><span class="p">(</span><span class="n">matrices</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fit_joint</span><span class="p">(</span><span class="n">matrices</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_fit_single</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m_mat</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># eigendecomposition</span>
+        <span class="n">eigvals</span><span class="p">,</span> <span class="n">eigvecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">m_mat</span><span class="p">)</span>
+        <span class="n">perm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">eigvals</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eigenvalues_</span> <span class="o">=</span> <span class="n">eigvals</span><span class="p">[</span><span class="n">perm</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">diagonalizer_</span> <span class="o">=</span> <span class="n">eigvecs</span><span class="p">[:,</span> <span class="n">perm</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_fit_joint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># joint approximate diagonalization</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">matrices</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">V</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">joint_diagonalization</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">diag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">D</span><span class="p">)))</span>
+        <span class="n">perm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">diag</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eigenvalues_</span> <span class="o">=</span> <span class="n">diag</span><span class="p">[</span><span class="n">perm</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">diagonalizer_</span> <span class="o">=</span> <span class="n">V</span><span class="p">[:,</span> <span class="n">perm</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_clone_without_dim_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Internal clone used during rank estimation — bypasses __init__ decomposition.&quot;&quot;&quot;</span>
+        <span class="n">clone</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="n">clone</span><span class="o">.</span><span class="n">scatters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scatters</span>
+        <span class="n">clone</span><span class="o">.</span><span class="n">dim_estimator</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">clone</span><span class="o">.</span><span class="n">estimated_rank_</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">clone</span><span class="o">.</span><span class="n">_white_data_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_white_data_</span>
+        <span class="n">clone</span><span class="o">.</span><span class="n">_partition_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_partition_</span>
+        <span class="n">clone</span><span class="o">.</span><span class="n">whitener_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">whitener_</span>
+        <span class="n">clone</span><span class="o">.</span><span class="n">diagonalizer_</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;diagonalizer_&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">clone</span><span class="o">.</span><span class="n">eigenvalues_</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;eigenvalues_&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">clone</span><span class="o">.</span><span class="n">individual_models_</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;individual_models_&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="k">return</span> <span class="n">clone</span></div>
+
+
+
+<span class="c1"># ----------------------------------------------------------------------</span>
+<span class="c1"># Convenience constructors</span>
+<span class="c1"># ----------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="SSA_SIR">
+<a class="viewcode-back" href="../../generated/pyssaBSS.ssa.html#pyssaBSS.SSA_SIR">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">SSA_SIR</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">partition</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SSA</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">SSA</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">,</span> <span class="n">partition</span><span class="p">,</span>
+        <span class="n">scatter</span><span class="o">=</span><span class="n">SIRScatter</span><span class="p">(),</span>
+        <span class="n">dim_estimator</span><span class="o">=</span><span class="n">AugmentationRankEstimator</span><span class="p">(</span><span class="n">noise_dim</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="n">num_rep</span><span class="o">=</span><span class="n">s</span><span class="p">),</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="SSA_SAVE">
+<a class="viewcode-back" href="../../generated/pyssaBSS.ssa.html#pyssaBSS.SSA_SAVE">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">SSA_SAVE</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">partition</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SSA</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">SSA</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">,</span> <span class="n">partition</span><span class="p">,</span>
+        <span class="n">scatter</span><span class="o">=</span><span class="n">SAVEScatter</span><span class="p">(),</span>
+        <span class="n">dim_estimator</span><span class="o">=</span><span class="n">AugmentationRankEstimator</span><span class="p">(</span><span class="n">noise_dim</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="n">num_rep</span><span class="o">=</span><span class="n">s</span><span class="p">),</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="SSA_COR">
+<a class="viewcode-back" href="../../generated/pyssaBSS.ssa.html#pyssaBSS.SSA_COR">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">SSA_COR</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">partition</span><span class="p">,</span> <span class="n">lag</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SSA</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">SSA</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">,</span> <span class="n">partition</span><span class="p">,</span>
+        <span class="n">scatter</span><span class="o">=</span><span class="n">CORScatter</span><span class="p">(</span><span class="n">lag</span><span class="p">),</span>
+        <span class="n">dim_estimator</span><span class="o">=</span><span class="n">AugmentationRankEstimator</span><span class="p">(</span><span class="n">noise_dim</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="n">num_rep</span><span class="o">=</span><span class="n">s</span><span class="p">),</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="SSA_COMB">
+<a class="viewcode-back" href="../../generated/pyssaBSS.ssa.html#pyssaBSS.SSA_COMB">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">SSA_COMB</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">partition</span><span class="p">,</span> <span class="n">lag</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SSA</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">SSA</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">,</span> <span class="n">partition</span><span class="p">,</span>
+        <span class="n">scatter</span><span class="o">=</span><span class="p">[</span>
+            <span class="p">(</span><span class="s2">&quot;sir&quot;</span><span class="p">,</span>  <span class="n">SIRScatter</span><span class="p">()),</span>
+            <span class="p">(</span><span class="s2">&quot;save&quot;</span><span class="p">,</span> <span class="n">SAVEScatter</span><span class="p">()),</span>
+            <span class="p">(</span><span class="s2">&quot;cor&quot;</span><span class="p">,</span>  <span class="n">LCORScatter</span><span class="p">(</span><span class="n">lag</span><span class="p">)),</span>
+        <span class="p">],</span>
+        <span class="n">dim_estimator</span><span class="o">=</span><span class="n">AugmentationRankEstimator</span><span class="p">(</span><span class="n">noise_dim</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="n">num_rep</span><span class="o">=</span><span class="n">s</span><span class="p">),</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+
+<span class="c1"># ----------------------------------------------------------------------</span>
+<span class="c1"># Utilities</span>
+<span class="c1"># ----------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="normalized_scree">
+<a class="viewcode-back" href="../../generated/pyssaBSS.ssa.html#pyssaBSS.normalized_scree">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">normalized_scree</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute normalized scree values from eigenvalues.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    eigenvalues : ndarray</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray</span>
+<span class="sd">        Normalized scree values in [0, 1].</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">abs_eigs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">)</span>
+    <span class="n">cumulative</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">abs_eigs</span><span class="p">)</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">abs_eigs</span><span class="p">)</span>
+    <span class="n">phi</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">abs_eigs</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">/</span> <span class="n">cumulative</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">phi</span></div>
+
+
+<div class="viewcode-block" id="AugmentationRankEstimator">
+<a class="viewcode-back" href="../../generated/pyssaBSS.ssa.html#pyssaBSS.AugmentationRankEstimator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AugmentationRankEstimator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Rank estimator based on data augmentation.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    noise_dim : int</span>
+<span class="sd">        Number of Gaussian noise components to append.</span>
+<span class="sd">    num_rep : int</span>
+<span class="sd">        Number of augmentation trials.</span>
+<span class="sd">    random_state : int or None</span>
+<span class="sd">        Random seed for reproducibility.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">noise_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="n">num_rep</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+            <span class="n">random_state</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">noise_dim</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;noise_dim must be positive&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">num_rep</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;num_rep must be positive&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">noise_dim</span> <span class="o">=</span> <span class="n">noise_dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_rep</span> <span class="o">=</span> <span class="n">num_rep</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="n">random_state</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_augment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">white_data</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+        <span class="n">p</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">white_data</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">noise</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">noise_dim</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">white_data</span><span class="p">,</span> <span class="n">noise</span><span class="p">])</span>
+
+<div class="viewcode-block" id="AugmentationRankEstimator.estimate">
+<a class="viewcode-back" href="../../generated/pyssaBSS.ssa.html#pyssaBSS.AugmentationRankEstimator.estimate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">estimate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">SSA</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RankResult</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Estimate rank by combining measurements of norms of augmented eigenvectors </span>
+<span class="sd">        and normalised scree plot of eigenvalues.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        model : SSA</span>
+<span class="sd">            An SSA model to compute the eigendecompositions.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        RankResult</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;_white_data_&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Model must be decomposed before rank estimation.&quot;</span><span class="p">)</span>
+
+        <span class="n">white_data</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">_white_data_</span>
+        <span class="n">p</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">white_data</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="c1"># compute norms of v^{AUG} for self.num_rep repetitions</span>
+        <span class="n">norms_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">num_rep</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_rep</span><span class="p">):</span>
+            <span class="n">aug_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_augment</span><span class="p">(</span><span class="n">white_data</span><span class="p">)</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">_clone_without_dim_estimator</span><span class="p">()</span>
+            <span class="n">temp</span><span class="o">.</span><span class="n">_decompose_from_white</span><span class="p">(</span><span class="n">aug_data</span><span class="p">)</span>
+
+            <span class="n">V</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">diagonalizer_</span>
+            <span class="n">v_aug</span> <span class="o">=</span> <span class="n">V</span><span class="p">[</span><span class="n">p</span><span class="p">:,</span> <span class="p">:</span><span class="n">p</span><span class="p">]</span>
+            <span class="n">norms_all</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ij,ij-&gt;j&#39;</span><span class="p">,</span> <span class="n">v_aug</span><span class="p">,</span> <span class="n">v_aug</span><span class="p">)</span>
+
+        <span class="c1"># mean data of augmented eigenvectors</span>
+        <span class="n">f_vec</span> <span class="o">=</span> <span class="n">norms_all</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">cum_f_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">f_vec</span><span class="p">)</span>
+
+        <span class="c1"># scree plot of eigenvalues</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="n">normalized_scree</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">eigenvalues_</span><span class="p">)</span>
+
+        <span class="c1"># combined estimate</span>
+        <span class="n">g_vec</span> <span class="o">=</span> <span class="n">cum_f_vec</span> <span class="o">+</span> <span class="n">phi</span>
+
+        <span class="k">return</span> <span class="n">RankResult</span><span class="p">(</span>
+            <span class="n">rank</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">g_vec</span><span class="p">)),</span>
+            <span class="n">f_vec</span><span class="o">=</span><span class="n">f_vec</span><span class="p">,</span>
+            <span class="n">phi</span><span class="o">=</span><span class="n">phi</span><span class="p">,</span>
+            <span class="n">g_vec</span><span class="o">=</span><span class="n">g_vec</span><span class="p">,</span>
+            <span class="n">cum_f_vec</span><span class="o">=</span><span class="n">cum_f_vec</span><span class="p">,</span>
+        <span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Perttu Saarela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

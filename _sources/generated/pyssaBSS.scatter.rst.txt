@@ -1,0 +1,16 @@
+pyssaBSS.scatter
+================
+
+.. automodule:: pyssaBSS.scatter
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      CORScatter
+      LCORScatter
+      SAVEScatter
+      SIRScatter
+      ScatterOperator
+   

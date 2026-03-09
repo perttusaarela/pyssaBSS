@@ -1,0 +1,16 @@
+pyssaBSS.kernels
+================
+
+.. automodule:: pyssaBSS.kernels
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      BallKernel
+      BaseKernel
+      GaussianKernel
+      RingKernel
+      ScaledBallKernel
+   

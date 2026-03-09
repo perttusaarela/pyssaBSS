@@ -1,0 +1,19 @@
+pyssaBSS.types
+==============
+
+.. automodule:: pyssaBSS.types
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      RankResult
+      SSARankSummary
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      SSAError
+   

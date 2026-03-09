@@ -1,0 +1,248 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyssaBSS.kernels &mdash; pyssaBSS 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pyssaBSS.polygon" href="pyssaBSS.polygon.html" />
+    <link rel="prev" title="pyssaBSS.joint_diag" href="pyssaBSS.joint_diag.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            pyssaBSS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pyssaBSS.html">pyssaBSS</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.AugmentationRankEstimator"><code class="docutils literal notranslate"><span class="pre">AugmentationRankEstimator</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.PolygonDrawer"><code class="docutils literal notranslate"><span class="pre">PolygonDrawer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SPSSA"><code class="docutils literal notranslate"><span class="pre">SPSSA</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SPSSA_COMB"><code class="docutils literal notranslate"><span class="pre">SPSSA_COMB()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SPSSA_LCOR"><code class="docutils literal notranslate"><span class="pre">SPSSA_LCOR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SPSSA_SAVE"><code class="docutils literal notranslate"><span class="pre">SPSSA_SAVE()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SPSSA_SIR"><code class="docutils literal notranslate"><span class="pre">SPSSA_SIR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SSA"><code class="docutils literal notranslate"><span class="pre">SSA</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SSA_COMB"><code class="docutils literal notranslate"><span class="pre">SSA_COMB()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SSA_COR"><code class="docutils literal notranslate"><span class="pre">SSA_COR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SSA_SAVE"><code class="docutils literal notranslate"><span class="pre">SSA_SAVE()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.SSA_SIR"><code class="docutils literal notranslate"><span class="pre">SSA_SIR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.html#pyssaBSS.joint_diagonalization"><code class="docutils literal notranslate"><span class="pre">joint_diagonalization()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.jdc.html">pyssaBSS.jdc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.joint_diag.html">pyssaBSS.joint_diag</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">pyssaBSS.kernels</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.kernels.BallKernel"><code class="docutils literal notranslate"><span class="pre">BallKernel</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.kernels.BaseKernel"><code class="docutils literal notranslate"><span class="pre">BaseKernel</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.kernels.GaussianKernel"><code class="docutils literal notranslate"><span class="pre">GaussianKernel</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.kernels.RingKernel"><code class="docutils literal notranslate"><span class="pre">RingKernel</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyssaBSS.kernels.ScaledBallKernel"><code class="docutils literal notranslate"><span class="pre">ScaledBallKernel</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.polygon.html">pyssaBSS.polygon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.scatter.html">pyssaBSS.scatter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.spatial.html">pyssaBSS.spatial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.spssa.html">pyssaBSS.spssa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.ssa.html">pyssaBSS.ssa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.types.html">pyssaBSS.types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyssaBSS.utils.html">pyssaBSS.utils</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyssaBSS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="pyssaBSS.html">pyssaBSS</a></li>
+      <li class="breadcrumb-item active">pyssaBSS.kernels</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/generated/pyssaBSS.kernels.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-pyssaBSS.kernels">
+<span id="pyssabss-kernels"></span><h1>pyssaBSS.kernels<a class="headerlink" href="#module-pyssaBSS.kernels" title="Link to this heading"></a></h1>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyssaBSS.kernels.BallKernel" title="pyssaBSS.kernels.BallKernel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BallKernel</span></code></a>(radius)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyssaBSS.kernels.BaseKernel" title="pyssaBSS.kernels.BaseKernel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseKernel</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyssaBSS.kernels.GaussianKernel" title="pyssaBSS.kernels.GaussianKernel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GaussianKernel</span></code></a>(radius)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyssaBSS.kernels.RingKernel" title="pyssaBSS.kernels.RingKernel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RingKernel</span></code></a>(inner_radius, outer_radius)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyssaBSS.kernels.ScaledBallKernel" title="pyssaBSS.kernels.ScaledBallKernel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ScaledBallKernel</span></code></a>(radius)</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyssaBSS.kernels.BallKernel">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyssaBSS.kernels.</span></span><span class="sig-name descname"><span class="pre">BallKernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/kernels.html#BallKernel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.kernels.BallKernel" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyssaBSS.kernels.BaseKernel" title="pyssaBSS.kernels.BaseKernel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseKernel</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyssaBSS.kernels.BallKernel.global_covariance">
+<span class="sig-name descname"><span class="pre">global_covariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/kernels.html#BallKernel.global_covariance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.kernels.BallKernel.global_covariance" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyssaBSS.kernels.BallKernel.local_covariance">
+<span class="sig-name descname"><span class="pre">local_covariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segment</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/kernels.html#BallKernel.local_covariance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.kernels.BallKernel.local_covariance" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyssaBSS.kernels.BaseKernel">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyssaBSS.kernels.</span></span><span class="sig-name descname"><span class="pre">BaseKernel</span></span><a class="reference internal" href="../_modules/pyssaBSS/kernels.html#BaseKernel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.kernels.BaseKernel" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyssaBSS.kernels.BaseKernel.global_covariance">
+<span class="sig-name descname"><span class="pre">global_covariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/kernels.html#BaseKernel.global_covariance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.kernels.BaseKernel.global_covariance" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyssaBSS.kernels.BaseKernel.local_covariance">
+<span class="sig-name descname"><span class="pre">local_covariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segment</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/kernels.html#BaseKernel.local_covariance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.kernels.BaseKernel.local_covariance" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyssaBSS.kernels.GaussianKernel">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyssaBSS.kernels.</span></span><span class="sig-name descname"><span class="pre">GaussianKernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/kernels.html#GaussianKernel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.kernels.GaussianKernel" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyssaBSS.kernels.BaseKernel" title="pyssaBSS.kernels.BaseKernel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseKernel</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyssaBSS.kernels.GaussianKernel.global_covariance">
+<span class="sig-name descname"><span class="pre">global_covariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/kernels.html#GaussianKernel.global_covariance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.kernels.GaussianKernel.global_covariance" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyssaBSS.kernels.GaussianKernel.local_covariance">
+<span class="sig-name descname"><span class="pre">local_covariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segment</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/kernels.html#GaussianKernel.local_covariance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.kernels.GaussianKernel.local_covariance" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyssaBSS.kernels.RingKernel">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyssaBSS.kernels.</span></span><span class="sig-name descname"><span class="pre">RingKernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inner_radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outer_radius</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/kernels.html#RingKernel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.kernels.RingKernel" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyssaBSS.kernels.BaseKernel" title="pyssaBSS.kernels.BaseKernel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseKernel</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyssaBSS.kernels.RingKernel.global_covariance">
+<span class="sig-name descname"><span class="pre">global_covariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/kernels.html#RingKernel.global_covariance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.kernels.RingKernel.global_covariance" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyssaBSS.kernels.RingKernel.local_covariance">
+<span class="sig-name descname"><span class="pre">local_covariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segment</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/kernels.html#RingKernel.local_covariance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.kernels.RingKernel.local_covariance" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyssaBSS.kernels.ScaledBallKernel">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyssaBSS.kernels.</span></span><span class="sig-name descname"><span class="pre">ScaledBallKernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/kernels.html#ScaledBallKernel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.kernels.ScaledBallKernel" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyssaBSS.kernels.BaseKernel" title="pyssaBSS.kernels.BaseKernel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseKernel</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyssaBSS.kernels.ScaledBallKernel.global_covariance">
+<span class="sig-name descname"><span class="pre">global_covariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/kernels.html#ScaledBallKernel.global_covariance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.kernels.ScaledBallKernel.global_covariance" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyssaBSS.kernels.ScaledBallKernel.local_covariance">
+<span class="sig-name descname"><span class="pre">local_covariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segment</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyssaBSS/kernels.html#ScaledBallKernel.local_covariance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyssaBSS.kernels.ScaledBallKernel.local_covariance" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pyssaBSS.joint_diag.html" class="btn btn-neutral float-left" title="pyssaBSS.joint_diag" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pyssaBSS.polygon.html" class="btn btn-neutral float-right" title="pyssaBSS.polygon" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Perttu Saarela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

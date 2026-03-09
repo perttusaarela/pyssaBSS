@@ -1,0 +1,21 @@
+pyssaBSS.spssa
+==============
+
+.. automodule:: pyssaBSS.spssa
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      SPSSA_COMB
+      SPSSA_LCOR
+      SPSSA_SAVE
+      SPSSA_SIR
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      SPSSA
+   

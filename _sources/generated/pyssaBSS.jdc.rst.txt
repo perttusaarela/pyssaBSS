@@ -1,0 +1,12 @@
+pyssaBSS.jdc
+============
+
+.. automodule:: pyssaBSS.jdc
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      joint_diagonalization
+   

@@ -1,0 +1,21 @@
+pyssaBSS.spatial
+================
+
+.. automodule:: pyssaBSS.spatial
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      generate_coordinates
+      generate_spatial_data
+      is_in_rectangle_mask
+      matern_covariance
+      params_to_block_vector
+      partition_coordinates
+      partition_points_by_polygons
+      points_in_polygon
+      spatial_data_from_cholesky
+      ssa_matern_covariance
+   

@@ -1,0 +1,22 @@
+﻿pyssaBSS
+========
+
+.. automodule:: pyssaBSS
+
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   jdc
+   joint_diag
+   kernels
+   polygon
+   scatter
+   spatial
+   spssa
+   ssa
+   types
+   utils

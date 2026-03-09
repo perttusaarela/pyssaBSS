@@ -1,0 +1,21 @@
+pyssaBSS.utils
+==============
+
+.. automodule:: pyssaBSS.utils
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      ball_kernel_local_sample_covariance
+      gaussian_kernel_local_sample_covariance
+      generate_random_invertible_matrix
+      generate_random_orthogonal_matrix
+      ring_kernel_local_sample_covariance
+      sample_autocovariance
+      sample_covariance
+      sample_mean
+      scaled_local_sample_covariance
+      standardize_data
+   
