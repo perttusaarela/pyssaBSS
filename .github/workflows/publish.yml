@@ -57,6 +57,8 @@ jobs:
     name: Upload to TestPyPI
     needs: [build_wheels, build_sdist]
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     environment: testpypi   # optional but good practice
 
     steps:
@@ -83,6 +85,8 @@ jobs:
     name: Upload to PyPI
     needs: upload_testpypi   # only runs after TestPyPI succeeds
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     environment: pypi        # optional but good practice
     # Extra safety — only publish to real PyPI on tagged releases
     if: startsWith(github.ref, 'refs/tags/v')
