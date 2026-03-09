@@ -6,58 +6,76 @@ from .spatial import points_in_polygon
 
 
 class PolygonDrawer:
+    SNAP_RADIUS_PX = 10  # pixels to snap-close polygon
+    MOVE_THRESHOLD = 2   # pixels of mouse movement before recomputing
+
     def __init__(self, ax, points, filename="polygons.json"):
         self.ax = ax
         self.fig = ax.figure
-
         self.points = np.asarray(points)
+        self.filename = filename
+
+        # Precompute point bounding box for fast rejection
+        self.pt_xmin, self.pt_ymin = self.points.min(axis=0)
+        self.pt_xmax, self.pt_ymax = self.points.max(axis=0)
 
         self.current = []
         self.polygons = []
-
-        self.line, = ax.plot([], [], "ro-")
-        self.preview_line, = ax.plot([], [], "r-",  linewidth=1)
-        self.closing_line, = ax.plot([], [], "r--", linewidth=1)
+        self.polygon_colors = []
         self.finished_lines = []
 
-        self.filename = filename
         self.colors = plt.rcParams["axes.prop_cycle"].by_key()["color"]
         self.color_idx = 0
-        self.polygon_colors = []
 
-        self.cid_click = self.fig.canvas.mpl_connect(
-            "button_press_event", self.on_click
-        )
-        self.cid_key = self.fig.canvas.mpl_connect(
-            "key_press_event", self.on_key
-        )
+        # Mouse state for throttling
+        self._last_mouse = (None, None)
+        self._last_count = 0
 
-        self.cid_scroll = self.fig.canvas.mpl_connect(
-            "scroll_event", self.on_scroll
-        )
+        # Plot elements
+        self.line, = ax.plot([], [], "ro-", zorder=5)
+        self.preview_line, = ax.plot([], [], "r-",  linewidth=1, zorder=4)
+        self.closing_line, = ax.plot([], [], "r--", linewidth=1, zorder=4)
+        self.snap_marker, = ax.plot([], [], "go", markersize=10, zorder=6)
 
-        self.cid_motion = self.fig.canvas.mpl_connect(
-            "motion_notify_event", self.on_move
-        )
-
-        self.count_text = self.ax.text(
+        self.hud = self.ax.text(
             0.02, 0.98, "",
             transform=self.ax.transAxes,
-            va="top", ha="left",
-            fontsize=10,
+            va="top", ha="left", fontsize=10,
             bbox=dict(facecolor="white", alpha=0.7, edgecolor="none")
         )
+        self.help_text = self.ax.text(
+            0.98, 0.98,
+            "click=add  right-click/n=close\n"
+            "backspace=undo vertex  ctrl+z/d=undo poly\n"
+            "w=save  q=quit  h=toggle help",
+            transform=self.ax.transAxes,
+            va="top", ha="right", fontsize=8,
+            bbox=dict(facecolor="white", alpha=0.7, edgecolor="none"),
+            visible=True
+        )
+
+        for event, handler in [
+            ("button_press_event", self.on_click),
+            ("key_press_event",    self.on_key),
+            ("scroll_event",       self.on_scroll),
+            ("motion_notify_event",self.on_move),
+        ]:
+            self.fig.canvas.mpl_connect(event, handler)
+
+    # ------------------------------------------------------------------ #
+    #  Events                                                              #
+    # ------------------------------------------------------------------ #
 
     def on_click(self, event):
         if event.inaxes != self.ax:
             return
-
-        # Left click to add vertex
         if event.button == 1:
-            self.current.append((event.xdata, event.ydata))
-            self._update_current()
-
-        # Right click to close polygon
+            # Snap-to-close if near first vertex
+            if self._near_first_vertex(event.xdata, event.ydata) and len(self.current) >= 3:
+                self._close_polygon()
+            else:
+                self.current.append((event.xdata, event.ydata))
+                self._update_current()
         elif event.button == 3 and len(self.current) >= 3:
             self._close_polygon()
 
@@ -65,111 +83,123 @@ class PolygonDrawer:
         if event.key == "n":
             if len(self.current) >= 3:
                 self._close_polygon()
-            self.current = []
-            self._update_current()
-
-        elif event.key == "w":
-            self.save(self.filename)
-            print("Saved polygons.json")
-
-        elif event.key == "q":
-            plt.close(self.fig)
-
-        # Delete latest vertex
+            else:
+                self.current = []
+                self._update_current()
+        elif event.key in ("d", "ctrl+z"):
+            self._delete_last_polygon()
         elif event.key == "backspace":
             self._delete_last_vertex()
-
-        # Delete last polygon
-        elif event.key == "d":
-            self._delete_last_polygon()
+        elif event.key == "w":
+            self.save(self.filename)
+            print(f"Saved to {self.filename}")
+        elif event.key == "h":
+            self.help_text.set_visible(not self.help_text.get_visible())
+            self.fig.canvas.draw_idle()
+        elif event.key == "q":
+            plt.close(self.fig)
 
     def on_scroll(self, event):
         if event.inaxes != self.ax:
             return
-
-        base_scale = 1.2
-
-        if event.button == "up":
-            scale_factor = 1 / base_scale
-        elif event.button == "down":
-            scale_factor = base_scale
-        else:
-            return
-
-        xdata = event.xdata
-        ydata = event.ydata
-
-        xlim = self.ax.get_xlim()
-        ylim = self.ax.get_ylim()
-
-        new_width = (xlim[1] - xlim[0]) * scale_factor
-        new_height = (ylim[1] - ylim[0]) * scale_factor
-
+        scale = 1 / 1.2 if event.button == "up" else 1.2
+        xdata, ydata = event.xdata, event.ydata
+        xlim, ylim = self.ax.get_xlim(), self.ax.get_ylim()
+        new_w = (xlim[1] - xlim[0]) * scale
+        new_h = (ylim[1] - ylim[0]) * scale
         relx = (xlim[1] - xdata) / (xlim[1] - xlim[0])
         rely = (ylim[1] - ydata) / (ylim[1] - ylim[0])
-
-        self.ax.set_xlim(
-            [xdata - new_width * (1 - relx),
-             xdata + new_width * relx]
-        )
-        self.ax.set_ylim(
-            [ydata - new_height * (1 - rely),
-             ydata + new_height * rely]
-        )
-
+        self.ax.set_xlim([xdata - new_w * (1 - relx), xdata + new_w * relx])
+        self.ax.set_ylim([ydata - new_h * (1 - rely), ydata + new_h * rely])
         self.fig.canvas.draw_idle()
 
     def on_move(self, event):
         if event.inaxes != self.ax or not self.current:
             self.preview_line.set_data([], [])
             self.closing_line.set_data([], [])
-            self.count_text.set_text("")
+            self.snap_marker.set_data([], [])
+            self.hud.set_text("")
             self.fig.canvas.draw_idle()
             return
 
+        mx, my = event.xdata, event.ydata
+
+        # Snap indicator
+        if self._near_first_vertex(mx, my) and len(self.current) >= 3:
+            self.snap_marker.set_data([self.current[0][0]], [self.current[0][1]])
+        else:
+            self.snap_marker.set_data([], [])
+
+        # Preview edge from last vertex to mouse
         x_last, y_last = self.current[-1]
+        self.preview_line.set_data([x_last, mx], [y_last, my])
 
-        self.preview_line.set_data(
-            [x_last, event.xdata],
-            [y_last, event.ydata]
-        )
-
-        # Temporary polygon = current + mouse
-        temp_poly = np.array(self.current + [(event.xdata, event.ydata)])
-
-        # Closing edge: mouse → first vertex (only if polygon can close)
         if len(self.current) >= 2:
             x_first, y_first = self.current[0]
-            self.closing_line.set_data(
-                [event.xdata, x_first],
-                [event.ydata, y_first]
+            self.closing_line.set_data([mx, x_first], [my, y_first])
+
+            # Throttle expensive count by movement threshold
+            lx, ly = self._last_mouse
+            if lx is None or self._pixel_dist(lx, ly, mx, my) > self.MOVE_THRESHOLD:
+                temp_poly = np.array(self.current + [(mx, my)])
+                self._last_count = self._count_inside(temp_poly)
+                self._last_mouse = (mx, my)
+
+            self.hud.set_text(
+                f"Vertices: {len(self.current)}  |  Points inside: {self._last_count}"
             )
-            inside = points_in_polygon(self.points, temp_poly)
-            count = inside.sum()
-            self.count_text.set_text(f"Points inside: {count}")
         else:
             self.closing_line.set_data([], [])
-            self.count_text.set_text("")
+            self.hud.set_text(f"Vertices: {len(self.current)}")
 
         self.fig.canvas.draw_idle()
+
+    # ------------------------------------------------------------------ #
+    #  Internal helpers                                                    #
+    # ------------------------------------------------------------------ #
+
+    def _count_inside(self, poly):
+        """Count points inside polygon with bounding-box pre-filter."""
+        px, py = poly[:, 0], poly[:, 1]
+        bb_mask = (
+            (self.points[:, 0] >= px.min()) & (self.points[:, 0] <= px.max()) &
+            (self.points[:, 1] >= py.min()) & (self.points[:, 1] <= py.max())
+        )
+        candidates = self.points[bb_mask]
+        if candidates.size == 0:
+            return 0
+        return points_in_polygon(candidates, poly).sum()
+
+    def _near_first_vertex(self, mx, my):
+        """Check if mouse is within SNAP_RADIUS_PX pixels of the first vertex."""
+        if not self.current:
+            return False
+        x0, y0 = self.current[0]
+        # Convert data coords to display coords for pixel comparison
+        disp = self.ax.transData.transform([(x0, y0), (mx, my)])
+        dx, dy = disp[1] - disp[0]
+        return (dx**2 + dy**2) ** 0.5 < self.SNAP_RADIUS_PX
+
+    def _pixel_dist(self, x0, y0, x1, y1):
+        """Mouse movement in pixels."""
+        disp = self.ax.transData.transform([(x0, y0), (x1, y1)])
+        dx, dy = disp[1] - disp[0]
+        return (dx**2 + dy**2) ** 0.5
 
     def _close_polygon(self):
         poly = np.array(self.current + [self.current[0]])
         self.polygons.append(poly)
-
         color = self.colors[self.color_idx % len(self.colors)]
         self.color_idx += 1
-
-        line, = self.ax.plot(
-            poly[:, 0], poly[:, 1],
-            color=color, linewidth=2
-        )
-        self.finished_lines.append(line)
         self.polygon_colors.append(color)
+        line, = self.ax.plot(poly[:, 0], poly[:, 1], color=color, linewidth=2)
+        self.finished_lines.append(line)
         self.current = []
+        self._last_mouse = (None, None)
         self.preview_line.set_data([], [])
         self.closing_line.set_data([], [])
-        self.count_text.set_text("")
+        self.snap_marker.set_data([], [])
+        self.hud.set_text("")
         self._update_current()
 
     def _update_current(self):
@@ -177,134 +207,38 @@ class PolygonDrawer:
             xs, ys = zip(*self.current)
         else:
             xs, ys = [], []
-
         self.line.set_data(xs, ys)
         if not self.current:
             self.preview_line.set_data([], [])
             self.closing_line.set_data([], [])
-            self.count_text.set_text("")
+            self.hud.set_text("")
         self.fig.canvas.draw_idle()
 
     def _delete_last_vertex(self):
         if self.current:
             self.current.pop()
+            self._last_mouse = (None, None)
             self._update_current()
 
     def _delete_last_polygon(self):
         if self.polygons:
             self.polygons.pop()
-
-            line = self.finished_lines.pop()
-            line.remove()
-
+            self.polygon_colors.pop()
+            self.finished_lines.pop().remove()
             self.fig.canvas.draw_idle()
+
+    # ------------------------------------------------------------------ #
+    #  Public                                                              #
+    # ------------------------------------------------------------------ #
 
     def save(self, filename):
         data = [
-            {
-                "vertices": poly.tolist(),
-                "color": color
-            }
+            {"vertices": poly.tolist(), "color": color}
             for poly, color in zip(self.polygons, self.polygon_colors)
         ]
-
         with open(filename, "w") as f:
             json.dump(data, f, indent=2)
 
     def get_polygons(self):
         return self.polygons
-
-
-def create_map(ax):
-    borders = pd.read_csv("data/kola/kola_borders.csv")
-    boundary = pd.read_csv("data/kola/kola_boundary.csv")
-    coast = pd.read_csv("data/kola/kola_coast.csv")
-    lakes = pd.read_csv("data/kola/kola_lakes.csv")
-
-    ax.plot(coast.V1, coast.V2, color="#4F4F4F", zorder=1)
-    ax.plot(lakes.V1, lakes.V2, color="#B3E5FC", zorder=1)
-    ax.plot(borders.V1, borders.V2, color="#81C784", zorder=1)
-    ax.plot(boundary.V1, boundary.V2, color="#4DB6AC", zorder=2)
-
-    # Compute bounds (reuse your logic, just cleaner)
-    x_min = min(
-        coast.V1.min(), lakes.V1.min(),
-        borders.V1.min(), boundary.V1.min()
-    )
-    x_max = max(
-        coast.V1.max(), lakes.V1.max(),
-        borders.V1.max(), boundary.V1.max()
-    )
-    y_min = min(
-        coast.V2.min(), lakes.V2.min(),
-        borders.V2.min(), boundary.V2.min()
-    )
-    y_max = max(
-        coast.V2.max(), lakes.V2.max(),
-        borders.V2.max(), boundary.V2.max()
-    )
-
-    # Moss data
-    df = pd.read_csv("data/kola/moss_data.csv")
-    coords = df.values[:, 2:4]
-    ax.scatter(
-        coords[:, 0], coords[:, 1],
-        marker="x", color="#D3D3D3", zorder=3
-    )
-
-    ax.set_xlim(x_min - 30000, x_max + 30000)
-    ax.set_ylim(y_min - 30000, y_max + 30000)
-    ax.set_aspect("equal", adjustable="datalim")
-    ax.axis("off")
-
-    return coords
-
-from matplotlib.patches import Circle
-def polygon_example():
-    fig, axes = plt.subplots(1, 2, figsize=(10, 6))
-    coords = create_map(axes[0])
-    center = coords[147]
-    circle = Circle(center, 50000, edgecolor='red', facecolor='none',
-                    linewidth=1, alpha=0.8, zorder=3)
-    axes[0].add_patch(circle)
-
-    create_map(axes[1])
-
-    with open("polygons1.json") as f:
-        polys = json.load(f)
-
-    for poly in polys:
-        poly = np.asarray(poly)
-        axes[1].plot(poly[:, 0], poly[:, 1], zorder=3)
-
-    # Remove spacing between subplots and figure edges
-    plt.subplots_adjust(left=0.1, right=1.1, top=1, bottom=0, wspace=0.1, hspace=0)
-
-    plt.tight_layout(pad=0.5)  # tighter layout
-    plt.savefig("kola_map.pdf", dpi=800, bbox_inches='tight', pad_inches=0)
-    plt.show()
-
-
-def kola_polygon_drawer():
-    fig, ax = plt.subplots(figsize=(8, 8), frameon=False)
-
-    points = create_map(ax)
-    drawer = PolygonDrawer(ax, points)
-
-    ax.set_title(
-        "Left click: add vertex | Right click: close polygon\n"
-        "n: new polygon | w: save | q: quit\n"
-        "backspace: delete last vertex | d: delete last polygon\n",
-        fontsize=10
-    )
-
-    plt.show()
-
-    polygons = drawer.get_polygons()
-    print(f"{len(polygons)} polygons drawn")
-
-
-if __name__ == "__main__":
-    kola_polygon_drawer()
-    exit()
 
