@@ -1,4 +1,5 @@
 # pyssaBSS
+[![PyPI version](https://badge.fury.io/py/pyssaBSS.svg)](https://pypi.org/project/pyssaBSS/)
 [![CI](https://github.com/perttusaarela/pyssaBSS/actions/workflows/publish.yml/badge.svg)](https://github.com/perttusaarela/pyssaBSS/actions)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 [![Documentation](https://readthedocs.org/projects/pyssaBSS/badge/?version=latest)](https://pyssaBSS.readthedocs.io)
