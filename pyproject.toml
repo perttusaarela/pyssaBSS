@@ -35,7 +35,7 @@ sdist.exclude = [".venv", "build"]
 minimum-version = "3.15"
 
 [tool.cibuildwheel]
-build-frontend = "build[uv]"   # ← skips the virtualenv.pyz download entirely
+build-frontend = "build[uv]" 
 build = "cp39-* cp310-* cp311-* cp312-*"
 skip = "*-win32 *-manylinux_i686 *-musllinux*"
 
@@ -43,8 +43,8 @@ skip = "*-win32 *-manylinux_i686 *-musllinux*"
 before-build = "pip install cmake pybind11"
 
 [tool.cibuildwheel.linux]
-manylinux-x86_64-image = "manylinux_2_28"  # newer than manylinux2014
-before-all = "dnf install -y openblas-devel" 
+manylinux-x86_64-image = "manylinux_2_28"    # ← upgrade from manylinux2014
+before-all = "dnf install -y openblas-devel"  # dnf instead of yum on 2_28
 before-build = "pip install cmake pybind11"
 
 [tool.cibuildwheel.windows]
