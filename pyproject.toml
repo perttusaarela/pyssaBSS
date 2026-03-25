@@ -4,7 +4,7 @@ build-backend = "scikit_build_core.build"
 
 [project]
 name = "pyssaBSS"
-version = "0.1.2"
+version = "0.1.3"
 description = "Stationary Subspace Analysis for temporal and spatial data"
 readme = "README.md"
 license = { file = "LICENSE" }
