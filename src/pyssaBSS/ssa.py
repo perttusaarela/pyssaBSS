@@ -248,6 +248,8 @@ class SSA:
         self.eigenvalues_ = diag[perm]
         self.diagonalizer_ = V[:, perm]
 
+        self.pseudoeigenvalues_ = [np.diagonal(d_mat)[perm] for d_mat in D]
+
     def _clone_without_dim_estimator(self):
         """Internal clone used during rank estimation — bypasses __init__ decomposition."""
         clone = object.__new__(type(self))
