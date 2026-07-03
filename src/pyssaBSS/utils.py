@@ -44,7 +44,7 @@ def sample_mean(data, segment=None):
 
     Parameters
     ----------
-    data : ndarray of shape (p, n)
+    data : ndarray of shape (n, p)
         if provided, compute the covariance over the given indi
     segment : ndarray, optional
 
@@ -53,9 +53,9 @@ def sample_mean(data, segment=None):
     ndarray of shape (p,)
     """
     if segment is None:
-        return np.mean(data, axis=1)
+        return np.mean(data, axis=0)
 
-    return np.mean(data[:, segment], axis=1)
+    return np.mean(data[segment], axis=0)
 
 
 def sample_covariance(data, segment=None, seg_mean=None):
@@ -64,7 +64,7 @@ def sample_covariance(data, segment=None, seg_mean=None):
 
     Parameters
     ----------
-    data : ndarray of shape (p, n)
+    data : ndarray of shape (n, p)
     segment : ndarray, optional
         if provided, compute the covariance over the given indices
     seg_mean : ndarray, optional
@@ -74,16 +74,16 @@ def sample_covariance(data, segment=None, seg_mean=None):
     ndarray of shape (p, p)
     """
     if segment is None:
-        segment = range(data.shape[1])
-    X = data[:, segment]
+        segment = range(data.shape[0])
+    X = data[segment]
 
     if seg_mean is None:
-        seg_mean = X.mean(axis=1, keepdims=True)
+        seg_mean = X.mean(axis=0)
     else:
         seg_mean = seg_mean[:, np.newaxis]
 
     centered = X - seg_mean
-    cov = (centered @ centered.T) / X.shape[1]
+    cov = (centered.T @ centered) / X.shape[0]
     return cov
 
 
@@ -98,11 +98,11 @@ def sample_autocovariance(
 
     Parameters
     ----------
-    data : ndarray of shape (p, n)
+    data : ndarray of shape (n, p)
     lag : int
         Lag at which to compute autocovariance. Must be >= 0.
     segment : ndarray of int indices, optional
-    seg_mean : ndarray of shape (p,) or (p, 1), optional
+    seg_mean : ndarray of shape (p,) or (p,), optional
         If None, computed from the segment.
 
     Returns
@@ -114,20 +114,20 @@ def sample_autocovariance(
         raise ValueError(f"lag must be >= 0, got {lag}")
 
     if segment is None:
-        segment = np.arange(data.shape[1])
+        segment = np.arange(data.shape[0])
     segment = np.asarray(segment)
 
-    X = data[:, segment]  # (p, n)
+    X = data[segment]  # (n, p)
 
     if seg_mean is None:
-        seg_mean = X.mean(axis=1, keepdims=True)
+        seg_mean = X.mean(axis=0)
     else:
         seg_mean = seg_mean[:, np.newaxis]
 
     Xc = X - seg_mean
-    N  = Xc.shape[1]
+    N  = Xc.shape[0]
 
-    acov = (Xc[:, :N - lag] @ Xc[:, lag:].T) / (N-lag)
+    acov = (Xc[:N-lag].T @ Xc[lag:]) / (N-lag)
     return acov
 
 
@@ -139,23 +139,23 @@ def standardize_data(data):
 
     Parameters
     ----------
-    data : ndarray of shape (p, n)
+    data : ndarray of shape (n, p)
 
     Returns
     -------
-    white_data: ndarray of shape (p, n)
+    white_data: ndarray of shape (n, p)
         data after standardization
     whitener: ndarray of shape (p, p)
         inverse square root of the covariance
     """
-    data -= data.mean(axis=1, keepdims=True)
-    cov = np.cov(data, bias=True, rowvar=True)
+    data -= data.mean(axis=0)
+    cov = np.cov(data, bias=True, rowvar=False)
     eigvals, eigvecs = np.linalg.eig(cov)
 
     # Compute A^{-1/2}
     sqrt_cov = eigvecs @ np.diag(1 / np.sqrt(eigvals)) @ eigvecs.T
 
-    return sqrt_cov @ data, sqrt_cov
+    return data @ sqrt_cov, sqrt_cov
 
 
 gauss_const = 1.6448536269514722  # \Psi^{-1}(0.95)
@@ -167,13 +167,13 @@ def scaled_local_sample_covariance(data, coords, radius, segment=None, seg_mean=
 
     Parameters
     ----------
-    data : ndarray of shape (p, n)
+    data : ndarray of shape (n, p)
     coords: ndarray of shape (n, 2)
     radius: float
         radius of the ball kernel
     segment: ndarray, optional
         indicates a subset of indices over which the local covariance is computed
-    seg_mean: ndarray of shape (p, 1), optional
+    seg_mean: ndarray of shape (p,), optional
         A precomputed mean of the segment. If None, it is computed
 
     Returns
@@ -182,15 +182,15 @@ def scaled_local_sample_covariance(data, coords, radius, segment=None, seg_mean=
         local (spatial) covariance matrix
     """
     if segment is None:
-        segment = np.arange(data.shape[1])
+        segment = np.arange(data.shape[0])
     segment = np.asarray(segment)
-    X = data[:, segment]   # (p, N)
+    X = data[segment]   # (n, p)
     C = coords[segment]    # (N, 2)
-    N = X.shape[1]
+    N = X.shape[0]
 
     if seg_mean is None:
-        seg_mean = X.mean(axis=1, keepdims=True)
-    Xc = X - seg_mean  # (p, N)
+        seg_mean = X.mean(axis=0)
+    Xc = X - seg_mean  # (n, p)
 
     # Binary ball kernel: w_ij = 1 if ||u_i - u_j|| <= radius, 0 otherwise
     diff = C[:, None, :] - C[None, :, :]
@@ -199,18 +199,18 @@ def scaled_local_sample_covariance(data, coords, radius, segment=None, seg_mean=
     np.fill_diagonal(W, 0)  # exclude u' = u
 
     # Per-row normalization: F_i = number of neighbors
-    F = W.sum(axis=1)  # (N,)
+    F = W.sum(axis=0)  # (N,)
     F = np.where(F > 0, F, 1)  # avoid division by zero
 
     # Normalize rows of W by F_i
     W_norm = W / F[:, None]  # (N, N)
 
     # weighted_Xj[i] = sum_j w_ij * Xc_j
-    weighted_Xj = Xc @ W_norm.T  # (p, N)
+    weighted_Xj = W_norm @ Xc  # (n, p)
 
     # l_cov = (1/N) * sum_i outer(Xc_i, weighted_Xj_i)
     #       = (1/N) * Xc @ weighted_Xj.T
-    return (Xc @ weighted_Xj.T) / N
+    return (Xc.T @ weighted_Xj) / N
 
 
 def ball_kernel_local_sample_covariance(data, coords, radius, segment=None, seg_mean=None):
@@ -219,13 +219,13 @@ def ball_kernel_local_sample_covariance(data, coords, radius, segment=None, seg_
 
     Parameters
     ----------
-    data : ndarray of shape (p, n)
+    data : ndarray of shape (n, p)
     coords: ndarray of shape (n, 2)
     radius: float
         radius of the ball kernel
     segment: ndarray, optional
         indicates a subset of indices over which the local covariance is computed
-    seg_mean: ndarray of shape (p, 1), optional
+    seg_mean: ndarray of shape (p,), optional
         A precomputed mean of the segment. If None, it is computed
 
     Returns
@@ -234,20 +234,18 @@ def ball_kernel_local_sample_covariance(data, coords, radius, segment=None, seg_
         local (spatial) covariance matrix
     """
     if segment is None:
-        segment = range(data.shape[1])
+        segment = range(data.shape[0])
     segment = np.array(segment)
 
-    X = data[:, segment]  # Shape: (p, N)
+    X = data[segment]  # Shape: (n, p)
     C = coords[segment]   # Shape: (N, 2)
-    N = X.shape[1]
+    N = X.shape[0]
 
     # Compute or reuse mean
     if seg_mean is None:
-        seg_mean = np.mean(X, axis=1, keepdims=True)  # Shape: (p, 1)
-    else:
-        seg_mean = seg_mean[:, np.newaxis]            # Ensure shape (p, 1)
+        seg_mean = np.mean(X, axis=0) 
 
-    X_centered = X - seg_mean                         # Shape: (p, N)
+    X_centered = X - seg_mean                         # Shape: (n, p)
 
     # Compute pairwise distances (squared)
     diffs = C[:, np.newaxis, :] - C[np.newaxis, :, :]   # (N, N, 2)
@@ -258,7 +256,7 @@ def ball_kernel_local_sample_covariance(data, coords, radius, segment=None, seg_
     np.fill_diagonal(mask, 0.0)                     # exclude self-pairs
 
     # Compute weighted covariance
-    l_cov = (X_centered @ mask @ X_centered.T) / (N)
+    l_cov = (X_centered.T @ mask @ X_centered) / (N)
 
     return l_cov
 
@@ -269,7 +267,7 @@ def ring_kernel_local_sample_covariance(data, coords, inner_radius, outer_radius
 
     Parameters
     ----------
-    data : ndarray of shape (p, n)
+    data : ndarray of shape (n, p)
     coords: ndarray of shape (n, 2)
     inner_radius: float
         inner radius of the ring kernel
@@ -277,7 +275,7 @@ def ring_kernel_local_sample_covariance(data, coords, inner_radius, outer_radius
         outer radius of the ring kernel
     segment: ndarray, optional
         indicates a subset of indices over which the local covariance is computed
-    seg_mean: ndarray of shape (p, 1), optional
+    seg_mean: ndarray of shape (p,), optional
         A precomputed mean of the segment. If None, it is computed
 
     Returns
@@ -286,20 +284,18 @@ def ring_kernel_local_sample_covariance(data, coords, inner_radius, outer_radius
         local (spatial) covariance matrix
     """
     if segment is None:
-        segment = range(data.shape[1])
+        segment = range(data.shape[0])
     segment = np.array(segment)
 
-    X = data[:, segment]                    # (p, N)
+    X = data[segment]                    # (n, p)
     C = coords[segment]                     # (N, 2)
-    N = X.shape[1]
+    N = X.shape[0]
 
     # Compute or reuse mean
     if seg_mean is None:
-        seg_mean = np.mean(X, axis=1, keepdims=True)  # (p, 1)
-    else:
-        seg_mean = seg_mean[:, np.newaxis]
+        seg_mean = np.mean(X, axis=0)  # (p,)
 
-    X_centered = X - seg_mean               # (p, N)
+    X_centered = X - seg_mean               # (n, p)
 
     # Pairwise squared distances
     diffs = C[:, np.newaxis, :] - C[np.newaxis, :, :]  # (N, N, 2)
@@ -314,7 +310,7 @@ def ring_kernel_local_sample_covariance(data, coords, inner_radius, outer_radius
     np.fill_diagonal(mask, 0.0)
 
     # Weighted covariance calculation
-    l_cov = (X_centered @ mask @ X_centered.T) / N
+    l_cov = (X_centered.T @ mask @ X_centered) / N
 
     return l_cov
 
@@ -325,13 +321,13 @@ def gaussian_kernel_local_sample_covariance(data, coords, radius, segment=None, 
 
     Parameters
     ----------
-    data : ndarray of shape (p, n)
+    data : ndarray of shape (n, p)
     coords: ndarray of shape (n, 2)
     radius: float
         radius of the gaussian kernel
     segment: ndarray, optional
         indicates a subset of indices over which the local covariance is computed
-    seg_mean: ndarray of shape (p, 1), optional
+    seg_mean: ndarray of shape (p,), optional
         A precomputed mean of the segment. If None, it is computed
 
     Returns
@@ -341,21 +337,18 @@ def gaussian_kernel_local_sample_covariance(data, coords, radius, segment=None, 
     """
     
     if segment is None:
-        segment = range(data.shape[1])
+        segment = range(data.shape[0])
     segment = np.array(segment)
 
-    X = data[:, segment]  # (p, N)
+    X = data[segment, :]  # (N, p)
     C = coords[segment]  # (N, 2)
-    N = X.shape[1]
-    D = X.shape[0]
+    N = X.shape[0]
 
     # Compute or reuse mean
     if seg_mean is None:
-        seg_mean = np.mean(X, axis=1, keepdims=True)  # (p, 1)
-    else:
-        seg_mean = seg_mean[:, np.newaxis]
+        seg_mean = np.mean(X, axis=0)  # (1, p)
 
-    X_centered = X - seg_mean  # (p, N)
+    X_centered = X - seg_mean  # (N, p)
 
     # Pairwise squared distances
     diffs = C[:, np.newaxis, :] - C[np.newaxis, :, :]  # (N, N, 2)
@@ -369,6 +362,6 @@ def gaussian_kernel_local_sample_covariance(data, coords, radius, segment=None, 
     np.fill_diagonal(weights, 0.0)
 
     # Weighted covariance
-    l_cov = (X_centered @ weights @ X_centered.T) / N
+    l_cov = (X_centered.T @ weights @ X_centered) / N
 
     return l_cov

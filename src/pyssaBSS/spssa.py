@@ -58,22 +58,47 @@ class SPSSA(SSA):
 
     def __init__(
             self,
-            data: NDArray[np.float64],
-            coords: NDArray,
+            data: Union[NDArray[np.float64], 'pd.DataFrame'],
             partition: NDArray,
             scatter: Union[Dict[str, Any], List[Any], Any],
+            coords: Optional[NDArray] = None,
+            coord_cols: Optional[list] = None,
+            data_cols: Optional[list] = None,
             dim_estimator: Optional['AugmentationRankEstimator'] = None,
     ) -> None:
         self.scatters      = self._validate_scatter(scatter)
         self.dim_estimator = dim_estimator
         self.estimated_rank_: Optional[int] = None
 
-        white_data, self.whitener_ = self._prepare_data(data)
+        white_data, self.whitener_, coords = self._prepare_data(data, data_cols, coords, coord_cols)
         self._coords_   = coords
         self._partition_ = partition
         self._decompose_from_white(white_data)
 
     # Public API is inherited from SSA
+
+    # Overridden private functions
+
+    def _prepare_data(self, data, data_cols, coords, coord_cols):
+        # check input data for dataframe
+        if hasattr(data, 'to_numpy'):
+            if coord_cols is None:  # need to specify which columns are coordinates
+                raise ValueError(
+                    "When passing a DataFrame, coord_cols must specify which "
+                    "columns contain coordinates, e.g. coord_cols=['x', 'y']"
+                )
+            coords = data[coord_cols].to_numpy(dtype=np.float64)  # extract coords
+            if data_cols is not None:  # check if data columns provided
+                data = data[data_cols].to_numpy(dtype=np.float64)
+            else:
+                # if not, everything but the coordinate columns will be used
+                data = data.drop(columns=coord_cols).to_numpy(dtype=np.float64)
+        else:
+            if coords is None:
+                raise ValueError("coords must be provided when data is a numpy array")
+
+        white_data, whitener = super()._prepare_data(data)
+        return white_data, whitener, coords
 
     def _decompose_from_white(self, white_data: NDArray[np.float64]) -> None:
         self._white_data_ = white_data
@@ -105,36 +130,36 @@ class SPSSA(SSA):
 # Convenience constructors
 # ----------------------------------------------------------------------
 
-def SPSSA_SIR(data, coords, partition, s=10, r=10, **kwargs) -> SPSSA:
+def SPSSA_SIR(data, partition, coords=None, s=10, r=10, **kwargs) -> SPSSA:
     return SPSSA(
-        data, coords, partition,
+        data=data, partition=partition, coords=coords,
         scatter=SIRScatter(),
         dim_estimator=AugmentationRankEstimator(noise_dim=r, num_rep=s),
         **kwargs,
     )
 
 
-def SPSSA_SAVE(data, coords, partition, s=10, r=10, **kwargs) -> SPSSA:
+def SPSSA_SAVE(data, partition, coords=None, s=10, r=10, **kwargs) -> SPSSA:
     return SPSSA(
-        data, coords, partition,
+        data=data, partition=partition, coords=coords,
         scatter=SAVEScatter(),
         dim_estimator=AugmentationRankEstimator(noise_dim=r, num_rep=s),
         **kwargs,
     )
 
 
-def SPSSA_LCOR(data, coords, partition, kernel=None, s=10, r=10, **kwargs) -> SPSSA:
+def SPSSA_LCOR(data, partition, coords=None, kernel=None, s=10, r=10, **kwargs) -> SPSSA:
     return SPSSA(
-        data, coords, partition,
+        data=data, partition=partition, coords=coords,
         scatter=LCORScatter(kernel),
         dim_estimator=AugmentationRankEstimator(noise_dim=r, num_rep=s),
         **kwargs,
     )
 
 
-def SPSSA_COMB(data, coords, partition, kernel=None, s=10, r=10, **kwargs) -> SPSSA:
+def SPSSA_COMB(data, partition, coords=None, kernel=None, s=10, r=10, **kwargs) -> SPSSA:
     return SPSSA(
-        data, coords, partition,
+        data=data, partition=partition, coords=coords,
         scatter=[
             ("sir",  SIRScatter()),
             ("save", SAVEScatter()),

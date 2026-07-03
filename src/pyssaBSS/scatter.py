@@ -18,7 +18,7 @@ class ScatterOperator:
 class SIRScatter(ScatterOperator):
 
     def compute(self, data, segments, coords=None):
-        p, n = data.shape
+        n, p = data.shape
         m_mat = np.zeros((p, p))
 
         for segment in segments:
@@ -31,7 +31,7 @@ class SIRScatter(ScatterOperator):
 class SAVEScatter(ScatterOperator):
 
     def compute(self, data, segments, coords=None):
-        p, n = data.shape
+        n, p = data.shape
         m_mat = np.zeros((p, p))
 
         for segment in segments:
@@ -47,7 +47,7 @@ class CORScatter(ScatterOperator):
         self.lag = lag
 
     def compute(self, data, segments):
-        p, n = data.shape
+        n, p = data.shape
         m_mat = np.zeros((p, p))
 
         full_auto_cov = sample_autocovariance(data, self.lag)
@@ -67,7 +67,7 @@ class LCORScatter(ScatterOperator):
         self.kernel = kernel
 
     def compute(self, data, segments, coords):
-        p, n = data.shape
+        n, p = data.shape
         m_mat = np.zeros((p, p))
 
         full_auto_cov = self.kernel.global_covariance(data, coords)

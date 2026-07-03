@@ -27,7 +27,7 @@ class SSA:
 
     Parameters
     ----------
-    data : ndarray of shape (n_signals, n_samples)
+    data : ndarray of shape (n_samples, n_signals)
         Observed data matrix. Decomposition is performed immediately on construction.
     partition : ndarray, optional
         Partition labels for observations.
@@ -57,7 +57,7 @@ class SSA:
 
     def __init__(
             self,
-            data: NDArray[np.float64],
+            data: Union[NDArray[np.float64], 'pd.DataFrame'],
             partition: NDArray,
             scatter: Union[Dict[str, Any], List[Any], Any],
             dim_estimator: Optional['AugmentationRankEstimator'] = None,
@@ -199,9 +199,13 @@ class SSA:
 
     def _prepare_data(
             self,
-            data: NDArray[np.float64],
+            data: Union[NDArray[np.float64], 'pd.DataFrame'],
     ) -> Tuple[NDArray, NDArray]:
-        # checks on input data and data whitening 
+        # Convert DataFrame to numpy array
+        if hasattr(data, 'to_numpy'):   # catches pd.DataFrame without hard import
+            data = data.to_numpy(dtype=np.float64)
+
+        # checks on input data
         if not isinstance(data, np.ndarray):
             raise TypeError(f"Data must be a numpy array, got {type(data)}")
         if data.ndim != 2:
@@ -209,6 +213,7 @@ class SSA:
         if data.size == 0:
             raise ValueError("Data array is empty")
 
+        # data whitening
         white_data, whitener = standardize_data(data)
 
         return white_data, whitener
@@ -361,9 +366,9 @@ class AugmentationRankEstimator:
         self._rng = np.random.RandomState(random_state)
 
     def _augment(self, white_data: NDArray[np.float64]) -> NDArray[np.float64]:
-        p, n = white_data.shape
-        noise = self._rng.standard_normal((self.noise_dim, n))
-        return np.vstack([white_data, noise])
+        n, p = white_data.shape
+        noise = self._rng.standard_normal((n, self.noise_dim))
+        return np.hstack([white_data, noise])
 
     def estimate(self, model: SSA) -> RankResult:
         """
@@ -383,7 +388,7 @@ class AugmentationRankEstimator:
             raise RuntimeError("Model must be decomposed before rank estimation.")
 
         white_data = model._white_data_
-        p, _ = white_data.shape
+        n, p = white_data.shape
 
         # compute norms of v^{AUG} for self.num_rep repetitions
         norms_all = np.zeros((self.num_rep, p))
@@ -394,7 +399,8 @@ class AugmentationRankEstimator:
 
             V = temp.diagonalizer_
             v_aug = V[p:, :p]
-            norms_all[s] = np.einsum('ij,ij->j', v_aug, v_aug)
+            norms = np.einsum('ij,ij->j', v_aug, v_aug)
+            norms_all[s] = norms
 
         # mean data of augmented eigenvectors
         f_vec = norms_all.mean(axis=0)

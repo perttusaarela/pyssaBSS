@@ -1,8 +1,11 @@
 .venv/
 dist/
+build/
 
+# Docs
 docs/_build/
 docs/generated/
 
+# pycaches
 src/pyssaBSS/__pycache__/
 src/pyssaBSS/joint_diag/__pycache__/
