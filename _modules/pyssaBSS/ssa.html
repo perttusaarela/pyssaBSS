@@ -329,6 +329,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">eigenvalues_</span> <span class="o">=</span> <span class="n">diag</span><span class="p">[</span><span class="n">perm</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">diagonalizer_</span> <span class="o">=</span> <span class="n">V</span><span class="p">[:,</span> <span class="n">perm</span><span class="p">]</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">pseudoeigenvalues_</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="n">d_mat</span><span class="p">)[</span><span class="n">perm</span><span class="p">]</span> <span class="k">for</span> <span class="n">d_mat</span> <span class="ow">in</span> <span class="n">D</span><span class="p">]</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">_clone_without_dim_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Internal clone used during rank estimation — bypasses __init__ decomposition.&quot;&quot;&quot;</span>
         <span class="n">clone</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
