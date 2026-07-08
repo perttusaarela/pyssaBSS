@@ -150,7 +150,7 @@ def standardize_data(data):
     """
     data -= data.mean(axis=1, keepdims=True)
     cov = np.cov(data, bias=True, rowvar=True)
-    eigvals, eigvecs = np.linalg.eig(cov)
+    eigvals, eigvecs = np.linalg.eigh(cov)
 
     # Compute A^{-1/2}
     sqrt_cov = eigvecs @ np.diag(1 / np.sqrt(eigvals)) @ eigvecs.T
